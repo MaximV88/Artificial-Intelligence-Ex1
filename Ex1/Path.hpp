@@ -17,17 +17,17 @@ class Path {
     
     //Private Variables
     const size_t m_uiCost;
-    const std::vector<Map::Directions> m_vcDirections;
+    const std::vector<Tile::Directions> m_vcDirections;
     
 public:
     
-    Path(const std::vector<Map::Directions>& vcDirections, size_t uiCost);
+    Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost);
     
     /** Returns the cost of the path */
     size_t getCost() const;
     
     /** Returns the directions the path made */
-    const std::vector<Map::Directions>& getDirections() const;
+    const std::vector<Tile::Directions>& getDirections() const;
     
     /** prints the formatted description of the path */
     friend std::ostream& operator<<(std::ostream &out, const Path &cPath);

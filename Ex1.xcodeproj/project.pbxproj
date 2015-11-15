@@ -46,6 +46,8 @@
 		94D023DB1BF890FF00CEF4A8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		94D023E01BF8AE5200CEF4A8 /* Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Path.cpp; sourceTree = "<group>"; };
 		94D023E11BF8AE5200CEF4A8 /* Path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Path.hpp; sourceTree = "<group>"; };
+		94D023E31BF8BCEA00CEF4A8 /* input2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input2.txt; sourceTree = "<group>"; };
+		94D023E41BF8BCEA00CEF4A8 /* input3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input3.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,8 @@
 				9450124E1BF7910300913F6C /* Map */,
 				9423719D1BF27E5D00F46C34 /* main.cpp */,
 				945012521BF7A35500913F6C /* input.txt */,
+				94D023E31BF8BCEA00CEF4A8 /* input2.txt */,
+				94D023E41BF8BCEA00CEF4A8 /* input3.txt */,
 			);
 			path = Ex1;
 			sourceTree = "<group>";

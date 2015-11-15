@@ -36,10 +36,10 @@ int main(int argc, const char * argv[]) {
     Algorithm* cAlgorithm = Algorithm::createAlgorithm(strAlgorithmType);
     
     //Get the result of the algorithm's application on the map
-    Path* cPath = cAlgorithm->apply(cMap);
+    Path* cPath = cAlgorithm->apply(cMap.getStartTile(), cMap.getEndTile());
     
     //Print the path
-    std::cout << cPath;
+    std::cout << *cPath << std::endl;
     
     //Remove all dynamiclly allocated memory and return
     delete cPath;

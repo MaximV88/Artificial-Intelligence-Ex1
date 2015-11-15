@@ -8,12 +8,12 @@
 
 #include "Path.hpp"
 
-Path::Path(const std::vector<Map::Directions>& vcDirections, size_t uiCost) :
+Path::Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost) :
 m_uiCost(uiCost), m_vcDirections(vcDirections) { }
 
 size_t Path::getCost() const { return m_uiCost; }
 
-const std::vector<Map::Directions>& Path::getDirections() const { return m_vcDirections; }
+const std::vector<Tile::Directions>& Path::getDirections() const { return m_vcDirections; }
 
 std::ostream& operator<< (std::ostream &out, const Path &cPath) {
 
@@ -28,22 +28,22 @@ std::ostream& operator<< (std::ostream &out, const Path &cPath) {
     //Otherwise gather all of the directions to a string
     std::string strFormatted;
 
-    for (Map::Directions direction : cPath.m_vcDirections) {
+    for (Tile::Directions direction : cPath.m_vcDirections) {
     
         //Append before each direction a '-' character, except for the first one
         if (strFormatted.length()) strFormatted.append("-");
         
         //Append by rules specified in instructions
         switch (direction) {
-            case Map::Directions::kCenter: break; //Dont add central direction
-            case Map::Directions::kDown:        strFormatted.append("D"); break;
-            case Map::Directions::kLeft:        strFormatted.append("L"); break;
-            case Map::Directions::kRight:       strFormatted.append("R"); break;
-            case Map::Directions::kUp:          strFormatted.append("U"); break;
-            case Map::Directions::kLeftDown:    strFormatted.append("LD"); break;
-            case Map::Directions::kLeftUp:      strFormatted.append("LU"); break;
-            case Map::Directions::kRightDown:   strFormatted.append("RD"); break;
-            case Map::Directions::kRightUp:     strFormatted.append("RU"); break;
+            case Tile::Directions::kCenter: break; //Dont add central direction
+            case Tile::Directions::kDown:        strFormatted.append("D");   break;
+            case Tile::Directions::kLeft:        strFormatted.append("L");   break;
+            case Tile::Directions::kRight:       strFormatted.append("R");   break;
+            case Tile::Directions::kUp:          strFormatted.append("U");   break;
+            case Tile::Directions::kLeftDown:    strFormatted.append("LD");  break;
+            case Tile::Directions::kLeftUp:      strFormatted.append("LU");  break;
+            case Tile::Directions::kRightDown:   strFormatted.append("RD");  break;
+            case Tile::Directions::kRightUp:     strFormatted.append("RU");  break;
         }
         
     }

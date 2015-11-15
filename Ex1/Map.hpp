@@ -25,19 +25,10 @@ class Map {
     //Private Functions
     constexpr size_t index(size_t x, size_t y) const;
     
+    /** Returns the neighbors of the input tile */
+    const std::vector<const Tile*> getNeighbors(const Tile& cTile) const;
+        
 public:
-    
-    enum class Directions : int_fast8_t {
-        kRight = 0,
-        kLeft,
-        kUp,
-        kDown,
-        kRightDown,
-        kRightUp,
-        kLeftDown,
-        kLeftUp,
-        kCenter
-    };
     
     /** Constructor */
     Map(const std::string& strFormattedMap);
@@ -48,12 +39,8 @@ public:
     Tile getStartTile() const;
     Tile getEndTile() const;
     
-    Directions getDirection(const Tile &cOrigin, const Tile& cDestination) const;
-    
-    /** May return 0 if out of map bounds */
-    const Tile* getTile(const Tile& cOrigin, Directions direction) const;
-
-    const std::vector<const Tile*> getNeighbors(const Tile& cTile) const;
+    /** May return null if out of map bounds */
+    const Tile* getTile(const Tile& cOrigin, Tile::Directions direction) const;
     
 };
 

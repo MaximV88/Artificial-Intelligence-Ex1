@@ -45,77 +45,38 @@ Map::Map(const std::string& strFormattedMap) : m_cData(nullptr) {
         }
         
     }
+    
+    /*
+     * After the assignment of Tiles to the map, each tile needs to 
+     * know about it's neighbors. This is done by assigning it's 
+     * reachable neighbors via pre-calculation in this class and
+     * setting the member variable at the Tile class.
+     */
+    
+    for (size_t uiRow = 0 ; uiRow < m_uiWidth ; uiRow++)
+        for (size_t uiCol = 0 ; uiCol < m_uiHeight ; uiCol++) {
+         
+            Tile& cCurrentTile = m_cData[index(uiCol, uiRow)];
+            
+            //Assign the neighbors
+            cCurrentTile.setNeighbors(getNeighbors(cCurrentTile));
+            
+        }
 
 }
 
 Map::~Map() {
 
     //Delete the allocated dynamic array
-    if (m_cData) delete [] m_cData;
+    if (m_cData) delete  m_cData;
 
 }
 
 Tile Map::getStartTile() const { return Tile(m_cData[0]); }
 
-Tile Map::getEndTile() const { return Tile(m_cData[index(m_uiWidth, m_uiHeight)]); }
+Tile Map::getEndTile() const { return Tile(m_cData[index(m_uiWidth - 1, m_uiHeight - 1)]); }
 
-Map::Directions Map::getDirection(const Tile &cOrigin, const Tile& cDestination) const {
-    
-    //Important to remember that highest is 0 and lowest is N-1, sideways is normal
-    
-    //Get the horizontal direction
-    Directions eHorizontal;
-    if (cDestination.m_uiPositionX == cOrigin.m_uiPositionX)        eHorizontal = Directions::kCenter;
-    else if (cDestination.m_uiPositionX > cOrigin.m_uiPositionX)    eHorizontal = Directions::kRight;
-    else                                                            eHorizontal = Directions::kLeft;
-    
-    //Get the vertical direction
-    Directions eVertical;
-    if (cDestination.m_uiPositionY == cOrigin.m_uiPositionY)        eVertical = Directions::kCenter;
-    else if (cDestination.m_uiPositionY > cOrigin.m_uiPositionY)    eVertical = Directions::kDown;
-    else                                                            eVertical = Directions::kUp;
-    
-    //Compare both horizontal and vertical to get the final heading
-    switch (eHorizontal) {
-        case Directions::kCenter:
-            
-            switch (eVertical) {
-                case Directions::kCenter:    return Directions::kCenter;
-                case Directions::kUp:        return Directions::kUp;
-                case Directions::kDown:      return Directions::kDown;
-                default: break; //Shouldnt reach
-            }
-            
-            break;
-            
-        case Directions::kRight:
-            
-            switch (eVertical) {
-                case Directions::kCenter:    return Directions::kRight;
-                case Directions::kUp:        return Directions::kRightUp;
-                case Directions::kDown:      return Directions::kRightDown;
-                default: break; //Shouldnt reach
-                    
-            }
-            
-        case Directions::kLeft:
-            
-            switch (eVertical) {
-                case Directions::kCenter:    return Directions::kLeft;
-                case Directions::kUp:        return Directions::kLeftUp;
-                case Directions::kDown:      return Directions::kLeftDown;
-                default:  break; //Shouldnt reach
-            }
-            
-            //Shouldnt reach
-        default: break;
-    }
-    
-    throw std::runtime_error("incorrect implementation of direction between tiles");
-    
-}
-
-const Tile* Map::getTile(const Tile &cOrigin, Directions direction) const {
+const Tile* Map::getTile(const Tile &cOrigin, Tile::Directions direction) const {
     
     /*
      * Checks if the origin tile's location is valid for retrieval in the requested direction,
@@ -124,63 +85,63 @@ const Tile* Map::getTile(const Tile &cOrigin, Directions direction) const {
      */
     
     switch (direction) {
-        case Directions::kUp:
+        case Tile::Directions::kUp:
             
             if (cOrigin.m_uiPositionY > 0)
                 return &m_cData[index(cOrigin.m_uiPositionX, cOrigin.m_uiPositionY - 1)];
             
             break;
             
-        case Directions::kDown:
+        case Tile::Directions::kDown:
             
             if (cOrigin.m_uiPositionY < m_uiHeight - 1)
                 return &m_cData[index(cOrigin.m_uiPositionX, cOrigin.m_uiPositionY + 1)];
             
             break;
             
-        case Directions::kLeft:
+        case Tile::Directions::kLeft:
             
             if (cOrigin.m_uiPositionX > 0 )
                 return &m_cData[index(cOrigin.m_uiPositionX - 1, cOrigin.m_uiPositionY)];
             
             break;
             
-        case Directions::kRight:
+        case Tile::Directions::kRight:
             
             if (cOrigin.m_uiPositionX < m_uiWidth - 1)
                 return &m_cData[index(cOrigin.m_uiPositionX + 1, cOrigin.m_uiPositionY)];
             
             break;
             
-        case Directions::kLeftDown:
+        case Tile::Directions::kLeftDown:
             
             if (cOrigin.m_uiPositionX > 0 && cOrigin.m_uiPositionY < m_uiHeight - 1)
                 return &m_cData[index(cOrigin.m_uiPositionX - 1, cOrigin.m_uiPositionY + 1)];
             
             break;
             
-        case Directions::kLeftUp:
+        case Tile::Directions::kLeftUp:
             
             if (cOrigin.m_uiPositionX > 0 && cOrigin.m_uiPositionY > 0)
                 return &m_cData[index(cOrigin.m_uiPositionX - 1, cOrigin.m_uiPositionY - 1)];
             
             break;
             
-        case Directions::kRightDown:
+        case Tile::Directions::kRightDown:
             
             if (cOrigin.m_uiPositionX < m_uiWidth - 1 && cOrigin.m_uiPositionY < m_uiHeight - 1)
                 return &m_cData[index(cOrigin.m_uiPositionX + 1, cOrigin.m_uiPositionY + 1)];
             
             break;
             
-        case Directions::kRightUp:
+        case Tile::Directions::kRightUp:
             
             if (cOrigin.m_uiPositionX < m_uiWidth - 1 && cOrigin.m_uiPositionY > 0)
                 return &m_cData[index(cOrigin.m_uiPositionX + 1, cOrigin.m_uiPositionY - 1)];
             
             break;
             
-        case Directions::kCenter: return &cOrigin; break;
+        case Tile::Directions::kCenter: return &cOrigin; break;
         default: break;
     }
     
@@ -191,8 +152,11 @@ const Tile* Map::getTile(const Tile &cOrigin, Directions direction) const {
 
 const std::vector<const Tile*> Map::getNeighbors(const Tile &cTile) const {
     
+    //Guardian - return empty
+    if (cTile.eType == Tile::Types::kWater) return std::vector<const Tile*>();
+    
     //Can have up to 8 adjacent tiles
-    std::vector<const Tile*> vcNeighbors(8);
+    std::vector<const Tile*> vcNeighbors;
 
     size_t uiRowHighest = std::min(m_uiWidth, cTile.m_uiPositionX + 1);
     size_t uiColHighest = std::min(m_uiHeight, cTile.m_uiPositionY + 1);
@@ -219,36 +183,36 @@ const std::vector<const Tile*> Map::getNeighbors(const Tile &cTile) const {
                  * been checked and found not to be Water, it's valid.
                  */
                 
-                switch (getDirection(cTile, cNeighbor)) {
-                    case Directions::kLeftDown:
+                switch (cTile.getDirection(cNeighbor)) {
+                    case Tile::Directions::kLeftDown:
                         
                         //Must get the 'Down' and 'Left' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Directions::kLeft)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Directions::kDown)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kLeft)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kDown)).eType == Tile::Types::kWater) continue;
                         vcNeighbors.push_back(&cNeighbor);
                         break;
                         
-                    case Directions::kLeftUp:
+                    case Tile::Directions::kLeftUp:
                         
                         //Must get the 'Up' and 'Left' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Directions::kLeft)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Directions::kUp)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kLeft)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kUp)).eType == Tile::Types::kWater) continue;
                         vcNeighbors.push_back(&cNeighbor);
                         break;
                         
-                    case Directions::kRightDown:
+                    case Tile::Directions::kRightDown:
                         
                         //Must get the 'Down' and 'Right' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Directions::kRight)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Directions::kDown)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kRight)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kDown)).eType == Tile::Types::kWater) continue;
                         vcNeighbors.push_back(&cNeighbor);
                         break;
                         
-                    case Directions::kRightUp:
+                    case Tile::Directions::kRightUp:
 
                         //Must get the 'Up' and 'Right' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Directions::kRight)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Directions::kUp)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kRight)).eType == Tile::Types::kWater) continue;
+                        if ((*getTile(cTile, Tile::Directions::kUp)).eType == Tile::Types::kWater) continue;
                         vcNeighbors.push_back(&cNeighbor);
                         break;
                         

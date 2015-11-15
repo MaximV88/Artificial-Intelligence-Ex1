@@ -12,9 +12,9 @@
 
 Algorithm* Algorithm::createAlgorithm(const std::string &strFormattedType) {
     
-    if (strFormattedType == std::string("IDS"))
+    if (strFormattedType.find("IDS") != std::string::npos)
         return createAlgorithm(AlgorithmType::kIDS);
-    else if (strFormattedType == std::string("UCS"))
+    else if (strFormattedType.find("UCS") != std::string::npos)
         return createAlgorithm(AlgorithmType::kUCS);
     
     return nullptr;

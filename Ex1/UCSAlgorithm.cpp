@@ -9,10 +9,9 @@
 #include "UCSAlgorithm.hpp"
 #include "Map.hpp"
 
-Path* UCSAlgorithm::apply(const Map& cMap) const {
+Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
     
     std::vector<Direction> vcRoute;
-    size_t uiCost = 0;
     
     
     return nullptr;

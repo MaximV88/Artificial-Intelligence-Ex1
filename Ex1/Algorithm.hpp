@@ -14,7 +14,7 @@
 #include <string>
 
 enum class Direction;
-class Map;
+class Tile;
 class Path;
 
 class Algorithm {
@@ -34,7 +34,7 @@ public:
     static Algorithm* createAlgorithm(AlgorithmType eType);
     
     /** Returns a vector of direction that represent the result of the algorithm */
-    virtual Path* apply(const Map& cMap) const = 0;
+    virtual Path* apply(const Tile& cStart, const Tile& cDestination) const = 0;
 
 };
 

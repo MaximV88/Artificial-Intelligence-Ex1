@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <cstdint>
 #include <iostream>
+#include <vector>
 
 class Tile {
 
@@ -21,10 +22,14 @@ class Tile {
     const size_t m_uiPositionX;
     const size_t m_uiPositionY;
     
+    std::vector<const Tile*> m_vcNeighbors;
+    
+    void setNeighbors(const std::vector<const Tile*>& vcNeighbors);
+    
 public:
     
     enum class Types : std::int_fast8_t {
-        kRoad = 0,
+        kRoad,
         kDirt,
         kHill,
         kWater,
@@ -32,6 +37,17 @@ public:
         kEnd
     };
     
+    enum class Directions : int_fast8_t {
+        kRight,
+        kLeft,
+        kUp,
+        kDown,
+        kRightDown,
+        kRightUp,
+        kLeftDown,
+        kLeftUp,
+        kCenter
+    };
 
     //Public Variables
     const Types eType;
@@ -42,6 +58,12 @@ public:
     
     /** Copy Constructor */
     Tile(const Tile& cTile);
+    
+    /** Returns the direction between the input tiles */
+    Directions getDirection(const Tile& cDestination) const;
+    
+    /** Returhs the neighbors of the current tile */
+    std::vector<const Tile*> getNeighbors() const;
     
     /** opeartor == */
     bool operator==(const Tile& cTile) const;
