@@ -23,7 +23,7 @@ class Tile {
     
 public:
     
-    enum class TileType : std::int_fast8_t {
+    enum class Types : std::int_fast8_t {
         kRoad = 0,
         kDirt,
         kHill,
@@ -32,30 +32,17 @@ public:
         kEnd
     };
     
-    enum class Direction : int_fast8_t {
-        kRight = 0,
-        kLeft,
-        kUp,
-        kDown,
-        kRightDown,
-        kRightUp,
-        kLeftDown,
-        kLeftUp,
-        kCenter
-    };
-    
+
     //Public Variables
-    const TileType eType;
+    const Types eType;
     
 
     /** Constructor */
-    Tile(TileType eTileType, size_t uiPositionX, size_t uiPositionY);
+    Tile(Types eTileType, size_t uiPositionX, size_t uiPositionY);
     
     /** Copy Constructor */
     Tile(const Tile& cTile);
     
-    Direction getDirection(const Tile& cTile) const;
-
     /** opeartor == */
     bool operator==(const Tile& cTile) const;
     bool operator!=(const Tile& cTile) const;

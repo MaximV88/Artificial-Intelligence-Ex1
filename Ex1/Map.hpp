@@ -26,7 +26,19 @@ class Map {
     constexpr size_t index(size_t x, size_t y) const;
     
 public:
-
+    
+    enum class Directions : int_fast8_t {
+        kRight = 0,
+        kLeft,
+        kUp,
+        kDown,
+        kRightDown,
+        kRightUp,
+        kLeftDown,
+        kLeftUp,
+        kCenter
+    };
+    
     /** Constructor */
     Map(const std::string& strFormattedMap);
     
@@ -36,7 +48,9 @@ public:
     Tile getStartTile() const;
     Tile getEndTile() const;
     
-    const Tile& getTile(const Tile& cOrigin, Tile::Direction) const;
+    Directions getDirection(const Tile &cOrigin, const Tile& cDestination) const;
+    
+    const Tile& getTile(const Tile& cOrigin, Directions direction) const;
 
     const std::vector<const Tile*> getNeighbors(const Tile& cTile) const;
     

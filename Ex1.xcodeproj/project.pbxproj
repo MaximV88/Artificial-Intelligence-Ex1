@@ -13,6 +13,7 @@
 		945012591BF7A38100913F6C /* IDSAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 945012571BF7A38100913F6C /* IDSAlgorithm.cpp */; };
 		9450125C1BF7A38A00913F6C /* UCSAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9450125A1BF7A38A00913F6C /* UCSAlgorithm.cpp */; };
 		945012601BF7A9F000913F6C /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9450125E1BF7A9F000913F6C /* Tile.cpp */; };
+		94D023D71BF88ACE00CEF4A8 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 94D023D61BF88ACE00CEF4A8 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,8 @@
 		9450125B1BF7A38A00913F6C /* UCSAlgorithm.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UCSAlgorithm.hpp; sourceTree = "<group>"; };
 		9450125E1BF7A9F000913F6C /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tile.cpp; sourceTree = "<group>"; };
 		9450125F1BF7A9F000913F6C /* Tile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tile.hpp; sourceTree = "<group>"; };
+		94D023D61BF88ACE00CEF4A8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		94D023D91BF88B3800CEF4A8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,8 @@
 				9450125D1BF7A39000913F6C /* Algorithm */,
 				9450124E1BF7910300913F6C /* Map */,
 				9423719D1BF27E5D00F46C34 /* main.cpp */,
+				94D023D61BF88ACE00CEF4A8 /* README.md */,
+				94D023D91BF88B3800CEF4A8 /* LICENSE */,
 				945012521BF7A35500913F6C /* input.txt */,
 			);
 			path = Ex1;
@@ -164,6 +169,7 @@
 				945012591BF7A38100913F6C /* IDSAlgorithm.cpp in Sources */,
 				9450125C1BF7A38A00913F6C /* UCSAlgorithm.cpp in Sources */,
 				945012561BF7A37700913F6C /* Algorithm.cpp in Sources */,
+				94D023D71BF88ACE00CEF4A8 /* README.md in Sources */,
 				945012601BF7A9F000913F6C /* Tile.cpp in Sources */,
 				9450124D1BF78D0A00913F6C /* Map.cpp in Sources */,
 				9423719E1BF27E5D00F46C34 /* main.cpp in Sources */,
