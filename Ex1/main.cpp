@@ -10,6 +10,8 @@
 #include <fstream>
 
 #include "Map.hpp"
+#include "Algorithm.hpp"
+#include "Path.hpp"
 
 using namespace std;
 
@@ -26,7 +28,22 @@ int main(int argc, const char * argv[]) {
     std::string strFormattedMap((std::istreambuf_iterator<char>(ifs) ),
                                 (std::istreambuf_iterator<char>()    ));
 
+    
+    //Create the representation of the map
     Map cMap = Map(strFormattedMap);
+    
+    //Create the required algorithm
+    Algorithm* cAlgorithm = Algorithm::createAlgorithm(strAlgorithmType);
+    
+    //Get the result of the algorithm's application on the map
+    Path* cPath = cAlgorithm->apply(cMap);
+    
+    //Print the path
+    std::cout << cPath;
+    
+    //Remove all dynamiclly allocated memory and return
+    delete cPath;
+    delete cAlgorithm;
     
     return 0;
 }

@@ -11,11 +11,11 @@
 
 #include <stdio.h>
 #include <vector>
-
-using namespace std;
+#include <string>
 
 enum class Direction;
 class Map;
+class Path;
 
 class Algorithm {
 public:
@@ -25,10 +25,16 @@ public:
         kUCS
     };
     
+    virtual ~Algorithm();
+    
+    /** Returns an algorithm by input string. supports "IDS" or "UCS" */
+    static Algorithm* createAlgorithm(const std::string& strFormattedType);
+    
+    /** Returns an algorithm by requested type */
     static Algorithm* createAlgorithm(AlgorithmType eType);
-
+    
     /** Returns a vector of direction that represent the result of the algorithm */
-    virtual vector<Direction>& apply(const Map& cMap) const = 0;
+    virtual Path* apply(const Map& cMap) const = 0;
 
 };
 

@@ -7,3 +7,28 @@
 //
 
 #include "Algorithm.hpp"
+#include "IDSAlgorithm.hpp"
+#include "UCSAlgorithm.hpp"
+
+Algorithm* Algorithm::createAlgorithm(const std::string &strFormattedType) {
+    
+    if (strFormattedType == std::string("IDS"))
+        return createAlgorithm(AlgorithmType::kIDS);
+    else if (strFormattedType == std::string("UCS"))
+        return createAlgorithm(AlgorithmType::kUCS);
+    
+    return nullptr;
+    
+}
+
+Algorithm* Algorithm::createAlgorithm(Algorithm::AlgorithmType eType) {
+    
+    switch (eType) {
+        case AlgorithmType::kIDS: return new IDSAlgorithm();
+        case AlgorithmType::kUCS: return new UCSAlgorithm();
+        default:                  return nullptr;
+    }
+    
+}
+
+Algorithm::~Algorithm() { }

@@ -7,3 +7,14 @@
 //
 
 #include "IDSAlgorithm.hpp"
+#include "Map.hpp"
+
+Path* IDSAlgorithm::apply(const Map& cMap) const {
+    
+    std::vector<Direction> vcRoute;
+    size_t uiCost = 0;
+    
+    
+    return nullptr;
+    
+}

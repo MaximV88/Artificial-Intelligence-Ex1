@@ -50,7 +50,8 @@ public:
     
     Directions getDirection(const Tile &cOrigin, const Tile& cDestination) const;
     
-    const Tile& getTile(const Tile& cOrigin, Directions direction) const;
+    /** May return 0 if out of map bounds */
+    const Tile* getTile(const Tile& cOrigin, Directions direction) const;
 
     const std::vector<const Tile*> getNeighbors(const Tile& cTile) const;
     

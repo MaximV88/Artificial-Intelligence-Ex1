@@ -12,9 +12,10 @@
 #include "Algorithm.hpp"
 
 class IDSAlgorithm : public Algorithm {
-    
-    
 public:
+    
+    /** Returns a vector of direction that represent the result of the algorithm */
+    virtual Path* apply(const Map& cMap) const;
     
 };
 

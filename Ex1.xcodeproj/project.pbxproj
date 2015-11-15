@@ -13,7 +13,7 @@
 		945012591BF7A38100913F6C /* IDSAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 945012571BF7A38100913F6C /* IDSAlgorithm.cpp */; };
 		9450125C1BF7A38A00913F6C /* UCSAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9450125A1BF7A38A00913F6C /* UCSAlgorithm.cpp */; };
 		945012601BF7A9F000913F6C /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9450125E1BF7A9F000913F6C /* Tile.cpp */; };
-		94D023DC1BF890FF00CEF4A8 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 94D023DB1BF890FF00CEF4A8 /* README.md */; };
+		94D023E21BF8AE5200CEF4A8 /* Path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D023E01BF8AE5200CEF4A8 /* Path.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +44,8 @@
 		9450125F1BF7A9F000913F6C /* Tile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Tile.hpp; sourceTree = "<group>"; };
 		94D023DA1BF890FF00CEF4A8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		94D023DB1BF890FF00CEF4A8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		94D023E01BF8AE5200CEF4A8 /* Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Path.cpp; sourceTree = "<group>"; };
+		94D023E11BF8AE5200CEF4A8 /* Path.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Path.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,8 @@
 				945012571BF7A38100913F6C /* IDSAlgorithm.cpp */,
 				9450125B1BF7A38A00913F6C /* UCSAlgorithm.hpp */,
 				9450125A1BF7A38A00913F6C /* UCSAlgorithm.cpp */,
+				94D023E11BF8AE5200CEF4A8 /* Path.hpp */,
+				94D023E01BF8AE5200CEF4A8 /* Path.cpp */,
 			);
 			name = Algorithm;
 			sourceTree = "<group>";
@@ -169,7 +173,7 @@
 				945012591BF7A38100913F6C /* IDSAlgorithm.cpp in Sources */,
 				9450125C1BF7A38A00913F6C /* UCSAlgorithm.cpp in Sources */,
 				945012561BF7A37700913F6C /* Algorithm.cpp in Sources */,
-				94D023DC1BF890FF00CEF4A8 /* README.md in Sources */,
+				94D023E21BF8AE5200CEF4A8 /* Path.cpp in Sources */,
 				945012601BF7A9F000913F6C /* Tile.cpp in Sources */,
 				9450124D1BF78D0A00913F6C /* Map.cpp in Sources */,
 				9423719E1BF27E5D00F46C34 /* main.cpp in Sources */,
