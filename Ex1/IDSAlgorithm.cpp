@@ -22,51 +22,14 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
         bIsFound = depthLimitedSearch(&cStart, &cDestination, uiDepth, scValid, vcChecked);
         ++uiDepth;
         
-        /*
-         * If the goal node has been found, get the information
-         * from the order they were added by.
-         */
         
-        if (bIsFound) {
-            
-            size_t uiCost = 0;
-            std::vector<Tile::Directions> vcDirections;
-            
-           while (!scValid.empty()) {
-
-            
-                const Tile* cCurrentTile = scValid.top();
-                scValid.pop();
-
-                switch (cCurrentTile->eType) {
-                    case Tile::Types::kRoad: uiCost += 1; break;
-                    case Tile::Types::kDirt: uiCost += 3; break;
-                    case Tile::Types::kHill: uiCost += 10; break;
-                    default: break; //Shouldnt add cost for non-existing tiles
-                }
-
-                //Dont add any more directions if its the last
-                if (scValid.empty()) break;
-                
-                const Tile* cNextTile = scValid.top();
-
-                //Store the direction of this tile compared to the previous
-                if (cNextTile) vcDirections.push_back(cCurrentTile->getDirection(*cNextTile));
-                
-            }
-            
-            //Return a path with gathered information
-            return new Path(vcDirections, uiCost);
-            
-        }
-     
         //No need to proceed more than the maximum path length
         if (uiDepth > uiTotalTiles)
             break;
         
     }
 
-    return new Path(std::vector<Tile::Directions>(), 0);
+    return Path::createPath(scValid);
 
 }
 

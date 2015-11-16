@@ -8,6 +8,41 @@
 
 #include "Path.hpp"
 
+Path* Path::createPath(const std::stack<const Tile *>& scPath) {
+    
+    std::stack<const Tile*> svModifiablePath = scPath;
+    
+    size_t uiCost = 0;
+    std::vector<Tile::Directions> vcDirections;
+    
+    //Get the information from the order they were added by.
+    while (!svModifiablePath.empty()) {
+        
+        const Tile* cCurrentTile = svModifiablePath.top();
+        svModifiablePath.pop();
+        
+        switch (cCurrentTile->eType) {
+            case Tile::Types::kRoad: uiCost += 1; break;
+            case Tile::Types::kDirt: uiCost += 3; break;
+            case Tile::Types::kHill: uiCost += 10; break;
+            default: break; //Shouldnt add cost for non-existing tiles
+        }
+        
+        //Dont add any more directions if its the last
+        if (svModifiablePath.empty()) break;
+        
+        const Tile* cNextTile = svModifiablePath.top();
+        
+        //Store the direction of this tile compared to the previous
+        if (cNextTile) vcDirections.push_back(cCurrentTile->getDirection(*cNextTile));
+        
+    }
+    
+    //Return a path with gathered information
+    return new Path(vcDirections, uiCost);
+    
+}
+
 Path::Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost) :
 m_uiCost(uiCost), m_vcDirections(vcDirections) { }
 

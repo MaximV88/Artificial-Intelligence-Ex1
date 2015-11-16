@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stack>
 #include "Map.hpp"
 
 class Path {
@@ -19,15 +20,22 @@ class Path {
     const size_t m_uiCost;
     const std::vector<Tile::Directions> m_vcDirections;
     
+    /** Private Constructor */
+    Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost);
+    
 public:
     
-    Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost);
+    /** Constructor */
+    Path(const std::stack<const Tile*>& scPath);
     
     /** Returns the cost of the path */
     size_t getCost() const;
     
     /** Returns the directions the path made */
     const std::vector<Tile::Directions>& getDirections() const;
+    
+    /** Returns a Path object that is influenced by the tile's order in the stack */
+    static Path* createPath(const std::stack<const Tile*>& scPath);
     
     /** prints the formatted description of the path */
     friend std::ostream& operator<<(std::ostream &out, const Path &cPath);

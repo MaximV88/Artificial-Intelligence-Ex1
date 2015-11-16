@@ -38,13 +38,13 @@ Tile::Directions Tile::getDirection(const Tile& cDestination) const {
     Directions eHorizontal;
     if (cDestination.m_uiPositionX == m_uiPositionX)        eHorizontal = Directions::kCenter;
     else if (cDestination.m_uiPositionX > m_uiPositionX)    eHorizontal = Directions::kRight;
-    else                                                            eHorizontal = Directions::kLeft;
+    else                                                    eHorizontal = Directions::kLeft;
     
     //Get the vertical direction
     Directions eVertical;
     if (cDestination.m_uiPositionY == m_uiPositionY)        eVertical = Directions::kCenter;
     else if (cDestination.m_uiPositionY > m_uiPositionY)    eVertical = Directions::kDown;
-    else                                                            eVertical = Directions::kUp;
+    else                                                    eVertical = Directions::kUp;
     
     //Compare both horizontal and vertical to get the final heading
     switch (eHorizontal) {
