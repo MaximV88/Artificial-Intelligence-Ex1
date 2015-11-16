@@ -20,7 +20,7 @@ class Path;
 class Algorithm {
 public:
     
-    enum class AlgorithmType {
+    enum class Type {
         kIDS,
         kUCS
     };
@@ -31,7 +31,7 @@ public:
     static Algorithm* createAlgorithm(const std::string& strFormattedType);
     
     /** Returns an algorithm by requested type */
-    static Algorithm* createAlgorithm(AlgorithmType eType);
+    static Algorithm* createAlgorithm(Algorithm::Type eType);
     
     /** Returns a vector of direction that represent the result of the algorithm */
     virtual Path* apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const = 0;

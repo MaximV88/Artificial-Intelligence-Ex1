@@ -13,12 +13,13 @@
 Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const {
 
     size_t uiDepth = 0;
+    std::stack<const Tile*> scValid;
     
     bool bIsFound = false;
     while (!bIsFound ) {
         
-        std::stack<const Tile*> scVisited;
-        bIsFound = depthLimitedSearch(&cStart, nullptr, &cDestination, uiDepth, scVisited);
+        std::vector<const Tile*> vcChecked;
+        bIsFound = depthLimitedSearch(&cStart, &cDestination, uiDepth, scValid, vcChecked);
         ++uiDepth;
         
         /*
@@ -31,10 +32,11 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
             size_t uiCost = 0;
             std::vector<Tile::Directions> vcDirections;
             
-            while (!scVisited.empty()) {
-                
-                const Tile* cCurrentTile = scVisited.top();
-                scVisited.pop();
+           while (!scValid.empty()) {
+
+            
+                const Tile* cCurrentTile = scValid.top();
+                scValid.pop();
 
                 switch (cCurrentTile->eType) {
                     case Tile::Types::kRoad: uiCost += 1; break;
@@ -44,9 +46,9 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
                 }
 
                 //Dont add any more directions if its the last
-                if (scVisited.empty()) break;
+                if (scValid.empty()) break;
                 
-                const Tile* cNextTile = scVisited.top();
+                const Tile* cNextTile = scValid.top();
 
                 //Store the direction of this tile compared to the previous
                 if (cNextTile) vcDirections.push_back(cCurrentTile->getDirection(*cNextTile));
@@ -68,26 +70,26 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
 
 }
 
-bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile* cPrevTile, const Tile *cGoal, size_t depth, std::stack<const Tile *>& scVisited) const {
+bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, size_t depth, std::stack<const Tile *>& scValid, std::vector<const Tile*>& vcChecked) const {
+    
+    vcChecked.push_back(cCurrent);
     
     //Since using unsigned int depth 0 is converted to simple check - add to visited if part of the path
-    if ((depth == 0) && (*cCurrent) == (*cGoal)) { scVisited.push(cCurrent); return true; }
+    if ((depth == 0) && (*cCurrent) == (*cGoal)) { scValid.push(cCurrent); return true; }
     else if (depth > 0) {
         
         //Iterate over all it's neighbors (that have not been iterated on yet)
         for (const Tile* cTile : cCurrent->getNeighbors()) {
             
-            //Duplicate pruning - dont go back to parent
-            if (cPrevTile && ((*cTile) == (*cPrevTile))) continue;
-            
             //If the recursion has found the goal, it's part of the correct path
-            if (depthLimitedSearch(cTile, cCurrent, cGoal, depth - 1, scVisited)) {
-                
-                //Insert into the visited set
-                scVisited.push(cCurrent);
-                return true;
-                
-            }
+            if (std::find(vcChecked.begin(), vcChecked.end(), cTile) == vcChecked.end())
+                if (depthLimitedSearch(cTile, cGoal, depth - 1, scValid, vcChecked)) {
+                    
+                    //Insert into the visited set
+                    scValid.push(cCurrent);
+                    return true;
+                    
+                }
             
         }
         
