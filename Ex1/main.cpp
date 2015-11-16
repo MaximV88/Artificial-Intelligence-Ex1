@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
     Algorithm* cAlgorithm = Algorithm::createAlgorithm(strAlgorithmType);
     
     //Get the result of the algorithm's application on the map
-    Path* cPath = cAlgorithm->apply(cMap.getStartTile(), cMap.getEndTile());
+    Path* cPath = cAlgorithm->apply(cMap.getStartTile(), cMap.getEndTile(), cMap.getTilesCount());
     
     //Print the path
     std::cout << *cPath << std::endl;

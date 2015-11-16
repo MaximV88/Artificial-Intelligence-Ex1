@@ -39,6 +39,8 @@ public:
     Tile getStartTile() const;
     Tile getEndTile() const;
     
+    size_t getTilesCount() const;
+    
     /** May return null if out of map bounds */
     const Tile* getTile(const Tile& cOrigin, Tile::Directions direction) const;
     

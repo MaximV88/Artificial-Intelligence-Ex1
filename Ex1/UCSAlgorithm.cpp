@@ -9,7 +9,7 @@
 #include "UCSAlgorithm.hpp"
 #include "Map.hpp"
 
-Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
+Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const {
     
     std::vector<Direction> vcRoute;
     

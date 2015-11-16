@@ -10,15 +10,17 @@
 #define IDSAlgorithm_hpp
 
 #include "Algorithm.hpp"
+#include <stack>
 
 class IDSAlgorithm : public Algorithm {
     
-    const Tile* depthLimitedSearch(const Tile* cCurrent, const Tile* cGoal, size_t depth, std::vector<const Tile*>& vcVisited) const;
+    /** Returns true if found, false otherwise */
+    bool depthLimitedSearch(const Tile* cCurrent, const Tile* cPrevTile, const Tile* cGoal, size_t depth, std::stack<const Tile*>& scVisited) const;
     
 public:
     
-    /** Returns a vector of direction that represent the result of the algorithm */
-    virtual Path* apply(const Tile& cStart, const Tile& cDestination) const;
+    /** Returns a path that represent the result of the algorithm */
+    virtual Path* apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const;
     
 };
 

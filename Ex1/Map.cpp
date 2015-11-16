@@ -12,6 +12,8 @@
 
 constexpr size_t Map::index(size_t x, size_t y) const { return x + m_uiWidth * y; }
 
+size_t Map::getTilesCount() const { return m_uiHeight * m_uiWidth; }
+
 Map::Map(const std::string& strFormattedMap) : m_cData(nullptr) {
     
     //The input is in formatted view, so fill the data according to each 'tile' (letter) - first get the size
@@ -158,14 +160,15 @@ const std::vector<const Tile*> Map::getNeighbors(const Tile &cTile) const {
     //Can have up to 8 adjacent tiles
     std::vector<const Tile*> vcNeighbors;
 
-    size_t uiRowHighest = std::min(m_uiWidth, cTile.m_uiPositionX + 1);
-    size_t uiColHighest = std::min(m_uiHeight, cTile.m_uiPositionY + 1);
+    //The following number should be included in the for loop (i.e. iteration with those values included in uiCol/uiRow)
+    size_t uiRowHighest = std::min(m_uiWidth - 1, cTile.m_uiPositionX + 1);
+    size_t uiColHighest = std::min(m_uiHeight - 1, cTile.m_uiPositionY + 1);
     size_t uiRowLowest  = std::max(size_t(0), (cTile.m_uiPositionX != 0) ? cTile.m_uiPositionX - 1 : 0);
     size_t uiColLowest  = std::max(size_t(0), (cTile.m_uiPositionY != 0) ? cTile.m_uiPositionY - 1 : 0);
     
-    //Iterate through all of the neighbors and store those who are valid
-    for (size_t uiRow = uiRowLowest ; uiRow <= uiRowHighest ; uiRow++)
-        for (size_t uiCol = uiColLowest ; uiCol <= uiColHighest ; uiCol++) {
+    //Iterate through all of the neighbors and store those who are valid (compensate for reducation in value before test)
+    for (size_t uiRow = uiRowHighest + 1 ; uiRow-- > uiRowLowest ;)
+        for (size_t uiCol = uiColHighest + 1 ; uiCol-- > uiColLowest ;) {
             
             //Skip the requesting tile
             if (uiRow == cTile.m_uiPositionX && uiCol == cTile.m_uiPositionY) continue;

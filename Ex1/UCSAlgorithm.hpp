@@ -14,7 +14,7 @@
 class UCSAlgorithm : public Algorithm {
     
     /** Returns a vector of direction that represent the result of the algorithm */
-    virtual Path* apply(const Tile& cStart, const Tile& cDestination) const;
+    virtual Path* apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const;
     
 public:
     
