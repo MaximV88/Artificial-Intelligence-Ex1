@@ -9,6 +9,7 @@
 #include "Map.hpp"
 #include "Tile.hpp"
 #include <algorithm>
+#include <stack>
 
 constexpr size_t Map::index(size_t x, size_t y) const { return x + m_uiWidth * y; }
 
@@ -62,7 +63,7 @@ Map::Map(const std::string& strFormattedMap) : m_cData(nullptr) {
             
             //Assign the neighbors
             cCurrentTile.setNeighbors(getNeighbors(cCurrentTile));
-            
+
         }
 
 }
@@ -156,28 +157,41 @@ const std::vector<const Tile*> Map::getNeighbors(const Tile &cTile) const {
     
     //Guardian - return empty
     if (cTile.eType == Tile::Types::kWater) return std::vector<const Tile*>();
+
+    bool bIsAtLeftBorder = (cTile.m_uiPositionX == 0);
+    bool bIsAtRightBorder = (cTile.m_uiPositionX == m_uiWidth - 1);
+    bool bIsAtTopBorder = (cTile.m_uiPositionY == 0);
+    bool bIsAtBottomBorder = (cTile.m_uiPositionY == m_uiHeight - 1);
     
+    //Push to stack the order in which to check the neighbors (as in instructions, but reversed due to stack)
+    std::stack<const Tile*> scTiles;
+    if (!bIsAtTopBorder) {
+        if (!bIsAtRightBorder)  scTiles.push(&m_cData[index(cTile.m_uiPositionX + 1, cTile.m_uiPositionY - 1)]);
+                                scTiles.push(&m_cData[index(cTile.m_uiPositionX, cTile.m_uiPositionY - 1)]);
+        if (!bIsAtLeftBorder)   scTiles.push(&m_cData[index(cTile.m_uiPositionX - 1, cTile.m_uiPositionY - 1)]);
+    }
+    
+    if (!bIsAtLeftBorder)       scTiles.push(&m_cData[index(cTile.m_uiPositionX - 1, cTile.m_uiPositionY)]);
+    
+    if (!bIsAtBottomBorder) {
+        if (!bIsAtLeftBorder)   scTiles.push(&m_cData[index(cTile.m_uiPositionX - 1, cTile.m_uiPositionY + 1)]);;
+                                scTiles.push(&m_cData[index(cTile.m_uiPositionX, cTile.m_uiPositionY + 1)]);
+        if (!bIsAtRightBorder)  scTiles.push(&m_cData[index(cTile.m_uiPositionX + 1, cTile.m_uiPositionY + 1)]);
+    }
+    
+    if (!bIsAtRightBorder)      scTiles.push(&m_cData[index(cTile.m_uiPositionX + 1, cTile.m_uiPositionY)]);
+
     //Can have up to 8 adjacent tiles
     std::vector<const Tile*> vcNeighbors;
-
-    //The following number should be included in the for loop (i.e. iteration with those values included in uiCol/uiRow)
-    size_t uiRowHighest = std::min(m_uiWidth - 1, cTile.m_uiPositionX + 1);
-    size_t uiColHighest = std::min(m_uiHeight - 1, cTile.m_uiPositionY + 1);
-    size_t uiRowLowest  = std::max(size_t(0), (cTile.m_uiPositionX != 0) ? cTile.m_uiPositionX - 1 : 0);
-    size_t uiColLowest  = std::max(size_t(0), (cTile.m_uiPositionY != 0) ? cTile.m_uiPositionY - 1 : 0);
     
     //Iterate through all of the neighbors and store those who are valid (compensate for reducation in value before test)
-    for (size_t uiRow = uiRowHighest + 1 ; uiRow-- > uiRowLowest ;)
-        for (size_t uiCol = uiColHighest + 1 ; uiCol-- > uiColLowest ;) {
-            
-            //Skip the requesting tile
-            if (uiRow == cTile.m_uiPositionX && uiCol == cTile.m_uiPositionY) continue;
+        while (!scTiles.empty()) {
 
-            const Tile& cNeighbor = m_cData[index(uiRow, uiCol)];
+            const Tile& cNeighbor = *scTiles.top();
+            scTiles.pop();
 
             //Check for water tiles
-            if (cNeighbor.eType == Tile::Types::kWater) continue;
-            else {
+            if (cNeighbor.eType != Tile::Types::kWater) {
                 
                 /* 
                  * Check if the neighbor is sideways or not, otherwise we add (default).

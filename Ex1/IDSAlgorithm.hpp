@@ -16,7 +16,7 @@
 class IDSAlgorithm : public Algorithm {
     
     /** Returns true if found, false otherwise */
-    bool depthLimitedSearch(const Tile* cCurrent, const Tile* cGoal, size_t depth, std::stack<const Tile*>& scValid, std::vector<const Tile*>& vcChecked) const;
+    bool depthLimitedSearch(const Tile* cCurrent, const Tile* cGoal, size_t depth, std::stack<const Tile*>& scValid) const;
     
 public:
     

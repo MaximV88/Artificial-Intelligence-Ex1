@@ -62,8 +62,14 @@ public:
     /** Returns the direction between the input tiles */
     Directions getDirection(const Tile& cDestination) const;
     
-    /** Returhs the neighbors of the current tile */
+    /** Returns the neighbors of the current tile */
     std::vector<const Tile*> getNeighbors() const;
+    
+    /** Returns a string that represents the type of the tile */
+    std::string kind() const;
+    
+    /** Returhs a char that represents the type of the tile */
+    char type() const;
     
     /** opeartor == */
     bool operator==(const Tile& cTile) const;

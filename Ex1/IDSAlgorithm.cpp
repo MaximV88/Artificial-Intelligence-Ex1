@@ -18,8 +18,8 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
     bool bIsFound = false;
     while (!bIsFound ) {
         
-        std::vector<const Tile*> vcChecked;
-        bIsFound = depthLimitedSearch(&cStart, &cDestination, uiDepth, scValid, vcChecked);
+        std::vector<const Tile*> vcOpenList;
+        bIsFound = depthLimitedSearch(&cStart, &cDestination, uiDepth, scValid);
         ++uiDepth;
         
         
@@ -30,12 +30,10 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
     }
 
     return Path::createPath(scValid);
-
+    
 }
 
-bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, size_t depth, std::stack<const Tile *>& scValid, std::vector<const Tile*>& vcChecked) const {
-    
-    vcChecked.push_back(cCurrent);
+bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, size_t depth, std::stack<const Tile *>& scValid) const {
     
     //Since using unsigned int depth 0 is converted to simple check - add to visited if part of the path
     if ((depth == 0) && (*cCurrent) == (*cGoal)) { scValid.push(cCurrent); return true; }
@@ -45,14 +43,13 @@ bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, s
         for (const Tile* cTile : cCurrent->getNeighbors()) {
             
             //If the recursion has found the goal, it's part of the correct path
-            if (std::find(vcChecked.begin(), vcChecked.end(), cTile) == vcChecked.end())
-                if (depthLimitedSearch(cTile, cGoal, depth - 1, scValid, vcChecked)) {
-                    
-                    //Insert into the visited set
-                    scValid.push(cCurrent);
-                    return true;
-                    
-                }
+            if (depthLimitedSearch(cTile, cGoal, depth - 1, scValid)) {
+                
+                //Insert into the visited set
+                scValid.push(cCurrent);
+                return true;
+                
+            }
             
         }
         

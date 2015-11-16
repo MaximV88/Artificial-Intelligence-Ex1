@@ -98,20 +98,41 @@ bool Tile::operator!=(const Tile &cTile) const {
     
 }
 
-std::ostream& operator<< (std::ostream &out, const Tile &cTile) {
+std::string Tile::kind() const {
     
-    std::string strType;
-    
-    switch (cTile.eType) {
-        case Tile::Types::kStart : strType = "Start";    break;
-        case Tile::Types::kEnd   : strType = "End";      break;
-        case Tile::Types::kHill  : strType = "Hill";     break;
-        case Tile::Types::kRoad  : strType = "Road";     break;
-        case Tile::Types::kDirt  : strType = "Dirt";     break;
-        case Tile::Types::kWater : strType = "Water";    break;
+    switch (eType) {
+        case Tile::Types::kStart : return "Start";
+        case Tile::Types::kEnd   : return "End";
+        case Tile::Types::kHill  : return "Hill";
+        case Tile::Types::kRoad  : return "Road";
+        case Tile::Types::kDirt  : return "Dirt";
+        case Tile::Types::kWater : return "Water";
     }
     
-    out << "Type: \t" << strType << ", \tLocation: (" << cTile.m_uiPositionX << ", " << cTile.m_uiPositionY << ")";
+}
+
+char Tile::type() const {
+ 
+    switch (eType) {
+        case Tile::Types::kStart:   return 'S';
+        case Tile::Types::kEnd:     return 'G';
+        case Tile::Types::kDirt:    return 'D';
+        case Tile::Types::kHill:    return 'H';
+        case Tile::Types::kWater:   return 'W';
+        case Tile::Types::kRoad:    return 'R';
+    }
+    
+}
+
+std::ostream& operator<< (std::ostream &out, const Tile &cTile) {
+    
+    out << "Type: \t" << cTile.type() << ", Neighbors: \t" << cTile.m_vcNeighbors.size() << ", \tLocation: (" << cTile.m_uiPositionX << ", " << cTile.m_uiPositionY << ")" << "\n";
+    
+    if (cTile.m_vcNeighbors.size()) out << "List of neighbors: \n" << std::endl;
+    
+    for (const Tile* cNeighbor : cTile.m_vcNeighbors)
+        out << "Type: \t" << cNeighbor->type() << ", \tLocation: (" << cNeighbor->m_uiPositionX << ", " << cNeighbor->m_uiPositionY << ")" << "\n";
+        
     return out;
     
 }
