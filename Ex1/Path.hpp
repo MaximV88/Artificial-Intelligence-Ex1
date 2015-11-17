@@ -37,6 +37,9 @@ public:
     /** Returns a Path object that is influenced by the tile's order in the stack */
     static Path* createPath(const std::stack<const Tile*>& scPath);
     
+    /** Returns a Path object that is influenced by the tile's order in the vector */
+    static Path* createPath(const std::vector<const Tile*>& vcPath);
+    
     /** prints the formatted description of the path */
     friend std::ostream& operator<<(std::ostream &out, const Path &cPath);
 

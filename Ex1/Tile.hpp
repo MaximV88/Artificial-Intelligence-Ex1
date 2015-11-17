@@ -74,9 +74,17 @@ public:
     /** opeartor == */
     bool operator==(const Tile& cTile) const;
     bool operator!=(const Tile& cTile) const;
-
+    bool operator<(const Tile& cTile) const;
+    bool operator>(const Tile& cTile) const;
+    
     friend std::ostream& operator<<(std::ostream &out, const Tile &cTile);
     
+};
+
+struct TileComparatorLessThan {
+    bool operator() (const Tile* lhs, const Tile* rhs) {
+        return *lhs < *rhs;
+    }
 };
 
 #endif /* Tile_hpp */

@@ -19,7 +19,8 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
     while (!bIsFound ) {
         
         std::vector<const Tile*> vcOpenList;
-        bIsFound = depthLimitedSearch(&cStart, &cDestination, uiDepth, scValid);
+        std::set<const Tile*, TileComparatorLessThan> scPath;
+        bIsFound = depthLimitedSearch(&cStart, &cDestination, uiDepth, scPath, scValid);
         ++uiDepth;
         
         
@@ -33,7 +34,9 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
     
 }
 
-bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, size_t depth, std::stack<const Tile *>& scValid) const {
+bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, size_t depth, std::set<const Tile*, TileComparatorLessThan>& scPath, std::stack<const Tile *>& scValid) const {
+    
+    scPath.insert(cCurrent);
     
     //Since using unsigned int depth 0 is converted to simple check - add to visited if part of the path
     if ((depth == 0) && (*cCurrent) == (*cGoal)) { scValid.push(cCurrent); return true; }
@@ -42,12 +45,19 @@ bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, s
         //Iterate over all it's neighbors (that have not been iterated on yet)
         for (const Tile* cTile : cCurrent->getNeighbors()) {
             
-            //If the recursion has found the goal, it's part of the correct path
-            if (depthLimitedSearch(cTile, cGoal, depth - 1, scValid)) {
+            //If the tile has not been visited yet on the current path (prevents cycles)
+            if (scPath.find(cTile) == scPath.end()) {
                 
-                //Insert into the visited set
-                scValid.push(cCurrent);
-                return true;
+                //Copy the current path to every unique following
+                std::set<const Tile*, TileComparatorLessThan> scCurrentPath = scPath;
+                
+                if(depthLimitedSearch(cTile, cGoal, depth - 1, scCurrentPath, scValid)) {
+                    
+                    //Insert into the visited set
+                    scValid.push(cCurrent);
+                    return true;
+                    
+                }
                 
             }
             

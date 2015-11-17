@@ -29,8 +29,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		941DD1471BFA463700FF02BF /* input4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input4.txt; sourceTree = "<group>"; };
+		941DD1481BFA520B00FF02BF /* input5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input5.txt; sourceTree = "<group>"; };
 		9423719A1BF27E5D00F46C34 /* Ex1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ex1; sourceTree = BUILT_PRODUCTS_DIR; };
 		9423719D1BF27E5D00F46C34 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		942915C71BFB59B700A89CFC /* input6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input6.txt; sourceTree = "<group>"; };
+		942915C81BFB5A5000A89CFC /* input7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input7.txt; sourceTree = "<group>"; };
 		9450124B1BF78D0A00913F6C /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		9450124C1BF78D0A00913F6C /* Map.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Map.hpp; sourceTree = "<group>"; };
 		945012521BF7A35500913F6C /* input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input.txt; sourceTree = "<group>"; };
@@ -85,9 +89,13 @@
 				9450125D1BF7A39000913F6C /* Algorithm */,
 				9450124E1BF7910300913F6C /* Map */,
 				9423719D1BF27E5D00F46C34 /* main.cpp */,
+				941DD1481BFA520B00FF02BF /* input5.txt */,
 				945012521BF7A35500913F6C /* input.txt */,
 				94D023E31BF8BCEA00CEF4A8 /* input2.txt */,
 				94D023E41BF8BCEA00CEF4A8 /* input3.txt */,
+				941DD1471BFA463700FF02BF /* input4.txt */,
+				942915C71BFB59B700A89CFC /* input6.txt */,
+				942915C81BFB5A5000A89CFC /* input7.txt */,
 			);
 			path = Ex1;
 			sourceTree = "<group>";

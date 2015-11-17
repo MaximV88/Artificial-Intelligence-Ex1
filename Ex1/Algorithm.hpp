@@ -9,12 +9,13 @@
 #ifndef Algorithm_hpp
 #define Algorithm_hpp
 
+#include "Tile.hpp"
 #include <stdio.h>
 #include <vector>
 #include <string>
 
+
 enum class Direction;
-class Tile;
 class Path;
 
 class Algorithm {

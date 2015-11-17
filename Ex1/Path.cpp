@@ -43,6 +43,33 @@ Path* Path::createPath(const std::stack<const Tile *>& scPath) {
     
 }
 
+Path* Path::createPath(const std::vector<const Tile *> &vcPath) {
+    
+    size_t uiCost = 0;
+    std::vector<Tile::Directions> vcDirections;
+    const Tile* cPrevTile = nullptr;
+    
+    for (const Tile* cCurrentTile : vcPath) {
+        
+        switch (cCurrentTile->eType) {
+            case Tile::Types::kRoad: uiCost += 1; break;
+            case Tile::Types::kDirt: uiCost += 3; break;
+            case Tile::Types::kHill: uiCost += 10; break;
+            default: break; //Shouldnt add cost for non-existing tiles
+        }
+        
+        //Store the direction of this tile compared to the previous
+        if (cPrevTile) vcDirections.push_back(cPrevTile->getDirection(*cCurrentTile));
+        
+        cPrevTile = cCurrentTile;
+
+    }
+    
+    //Return a path with gathered information
+    return new Path(vcDirections, uiCost);
+    
+}
+
 Path::Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost) :
 m_uiCost(uiCost), m_vcDirections(vcDirections) { }
 

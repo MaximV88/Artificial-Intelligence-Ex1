@@ -12,11 +12,12 @@
 #include "Algorithm.hpp"
 #include <stack>
 #include <vector>
+#include <set>
 
 class IDSAlgorithm : public Algorithm {
     
     /** Returns true if found, false otherwise */
-    bool depthLimitedSearch(const Tile* cCurrent, const Tile* cGoal, size_t depth, std::stack<const Tile*>& scValid) const;
+    bool depthLimitedSearch(const Tile* cCurrent, const Tile* cGoal, size_t depth, std::set<const Tile*, TileComparatorLessThan>& scPath, std::stack<const Tile*>& scValid) const;
     
 public:
     

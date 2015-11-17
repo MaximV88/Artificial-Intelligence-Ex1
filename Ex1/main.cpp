@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, const char * argv[]) {
 
     //Read the file to seperate the contents of map and algorithm
-    ifstream ifs("input3.txt");
+    ifstream ifs("input.txt");
     
     //Get the algorithm type
     string strAlgorithmType;

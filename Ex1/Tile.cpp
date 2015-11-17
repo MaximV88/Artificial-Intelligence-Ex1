@@ -98,6 +98,18 @@ bool Tile::operator!=(const Tile &cTile) const {
     
 }
 
+bool Tile::operator<(const Tile &cTile) const {
+
+    return ((m_uiPositionX < cTile.m_uiPositionX) || ((m_uiPositionX == cTile.m_uiPositionX) && m_uiPositionY < cTile.m_uiPositionY));
+    
+}
+
+bool Tile::operator>(const Tile &cTile) const {
+    
+    return ((m_uiPositionX > cTile.m_uiPositionX) || ((m_uiPositionX == cTile.m_uiPositionX) && m_uiPositionY > cTile.m_uiPositionY));
+    
+}
+
 std::string Tile::kind() const {
     
     switch (eType) {
