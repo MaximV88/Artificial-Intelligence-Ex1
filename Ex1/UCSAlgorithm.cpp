@@ -16,49 +16,54 @@
 
 Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const {
     
-//    std::vector<const Tile*> vcPath;
-//
-//    std::priority_queue<const Tile*, std::vector<const Tile*>, TileComparatorLessThan> pcFrontier;
-//    std::set<const Tile*, TileComparatorEqual> scFrontier;
-//    std::set<const Tile*, TileComparatorEqual> scExplored;
-//    
-//    pcFrontier.push(&cStart);
-//    scFrontier.insert(&cStart);
-//
-//    while (!pcFrontier.empty()) {
-//        
-//        const Tile* cNode = pcFrontier.top();
-//        pcFrontier.pop();
-//        scFrontier.erase(cNode);
-//        
-//        vcPath.push_back(cNode);
-//
-//        if ((*cNode) == cDestination) {
-//            return Path::createPath(vcPath);
-//        }
-//        
-//        scExplored.insert(cNode);
-//        
-//        for (const Tile* cChild : cNode->getNeighbors()) {
-//            
-//            if (!scExplored.count(cChild)) {
-//                
-//                if (scFrontier.find(cChild) == scFrontier.end()) {
-//                    
-//                    pcFrontier.push(cChild);
-//                    
-//                }
-//                //If it has a higher cost  (not the first)
-//             //   else if ((*cPrev)->eType > cChild->eType) {
-//                  //  std::swap(cChild, (*cPrev));
-//                  //  std::make_heap(vcFrontier.begin(), vcFrontier.end());
-//               // }
-//                
-//            }
-//            
-//        }
-//        
-//    }
+    std::priority_queue<const UCSAlgorithmNode*, std::vector<const UCSAlgorithmNode*>, NodeComparatorLessThan> pcFrontier;
+    std::set<const Tile*, TileComparatorLessThan> scExplored;
+    std::set<const Tile*, TileComparatorLessThan> scFrontier;
+
+    //Stores all of the allocated nodes
+    std::stack<const UCSAlgorithmNode*> vcAllNodes;
+    
+    const UCSAlgorithmNode* cStartNode = new UCSAlgorithmNode(nullptr, 0, &cStart);
+    
+    vcAllNodes.push(cStartNode);
+    pcFrontier.push(cStartNode);
+    scFrontier.insert(&cStart);
+    
+    while (!pcFrontier.empty()) {
+        
+        const UCSAlgorithmNode* cNode = pcFrontier.top();
+        pcFrontier.pop();
+        scFrontier.erase(cNode->getTile());
+        
+        if ((*(cNode->getTile())) == cDestination) {
+            
+            std::stack<const Tile*> scTiles;
+            
+            //Retrace all of the parent nodes
+            while (cNode->getParent()) {
+                scTiles.push(cNode->getTile());
+                cNode = cNode->getParent();
+            }
+            
+            return Path::createPath(scTiles);
+            
+        }
+        
+        scExplored.insert(cNode->getTile());
+        
+        for (const Tile* cChild : cNode->getTile()->getNeighbors())
+            if (scExplored.find(cChild) == scExplored.end() &&
+                (scFrontier.find(cChild) == scFrontier.end())) {
+                
+                const UCSAlgorithmNode* cChildNode = new UCSAlgorithmNode(cNode, cNode->getPathCost() + cNode->getTile()->eType, cChild);
+                vcAllNodes.push(cChildNode);
+                pcFrontier.push(cChildNode);
+                scFrontier.insert(cChild);
+                
+            }
+        
+    }
+    
     
     return Path::createPath(std::vector<const Tile*>());
     

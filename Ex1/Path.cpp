@@ -97,7 +97,7 @@ std::ostream& operator<< (std::ostream &out, const Path &cPath) {
         
         //Append by rules specified in instructions
         switch (direction) {
-            case Tile::Directions::kCenter: break; //Dont add central direction
+            case Tile::Directions::kCenter:      strFormatted.append("C");   break; //Something is wrong
             case Tile::Directions::kDown:        strFormatted.append("D");   break;
             case Tile::Directions::kLeft:        strFormatted.append("L");   break;
             case Tile::Directions::kRight:       strFormatted.append("R");   break;

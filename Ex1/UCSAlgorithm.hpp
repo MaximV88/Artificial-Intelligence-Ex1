@@ -14,6 +14,28 @@
 
 class UCSAlgorithm : public Algorithm {
     
+    struct UCSAlgorithmNode {
+        
+        const Tile* m_cTile;
+        size_t m_uiPathCost;
+        const UCSAlgorithmNode* m_cParent;
+                
+        const Tile* getTile() const { return m_cTile; }
+        size_t getPathCost() const { return m_uiPathCost; }
+        const UCSAlgorithmNode* getParent() const { return m_cParent; }
+        
+        UCSAlgorithmNode(const UCSAlgorithmNode* cParent, size_t uiPathCost, const Tile* cTile) :
+        m_cTile(cTile), m_cParent(cParent), m_uiPathCost(uiPathCost) { }
+        
+    };
+    
+    struct NodeComparatorLessThan {
+        bool operator() (const UCSAlgorithmNode* lhs, const UCSAlgorithmNode* rhs) {
+            return lhs->getPathCost() < rhs->getPathCost();
+        }
+    };
+
+    
     /** Returns a vector of direction that represent the result of the algorithm */
     virtual Path* apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const;
         

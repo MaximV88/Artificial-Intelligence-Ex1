@@ -33,6 +33,9 @@
 		941DD1481BFA520B00FF02BF /* input5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input5.txt; sourceTree = "<group>"; };
 		9423719A1BF27E5D00F46C34 /* Ex1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ex1; sourceTree = BUILT_PRODUCTS_DIR; };
 		9423719D1BF27E5D00F46C34 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9424CF1C1BFBCF6900DA3742 /* input4I.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input4I.txt; sourceTree = "<group>"; };
+		9424CF1D1BFBCF6A00DA3742 /* input5I.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input5I.txt; sourceTree = "<group>"; };
+		9424CF1E1BFBCF6A00DA3742 /* input6I.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input6I.txt; sourceTree = "<group>"; };
 		942915C71BFB59B700A89CFC /* input6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input6.txt; sourceTree = "<group>"; };
 		942915C81BFB5A5000A89CFC /* input7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input7.txt; sourceTree = "<group>"; };
 		9450124B1BF78D0A00913F6C /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
@@ -96,6 +99,9 @@
 				941DD1471BFA463700FF02BF /* input4.txt */,
 				942915C71BFB59B700A89CFC /* input6.txt */,
 				942915C81BFB5A5000A89CFC /* input7.txt */,
+				9424CF1C1BFBCF6900DA3742 /* input4I.txt */,
+				9424CF1D1BFBCF6A00DA3742 /* input5I.txt */,
+				9424CF1E1BFBCF6A00DA3742 /* input6I.txt */,
 			);
 			path = Ex1;
 			sourceTree = "<group>";

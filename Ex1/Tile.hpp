@@ -28,10 +28,10 @@ class Tile {
     
 public:
     
-    enum class Types : std::int_fast8_t {
-        kRoad,
-        kDirt,
-        kHill,
+    enum Types : std::int_fast8_t {
+        kRoad = 1,
+        kDirt = 3,
+        kHill = 10,
         kWater,
         kStart,
         kEnd
