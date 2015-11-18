@@ -18,7 +18,7 @@ using namespace std;
 int main(int argc, const char * argv[]) {
 
     //Read the file to seperate the contents of map and algorithm
-    ifstream ifs("input6I.txt");
+    ifstream ifs("input.txt");
     
     //Get the algorithm type
     string strAlgorithmType;
@@ -35,9 +35,20 @@ int main(int argc, const char * argv[]) {
     //Create the required algorithm
     Algorithm* cAlgorithm = Algorithm::createAlgorithm(strAlgorithmType);
     
-    //Get the result of the algorithm's application on the map
-    Path* cPath = cAlgorithm->apply(cMap.getStartTile(), cMap.getEndTile(), cMap.getTilesCount());
+    Path* cPath;
     
+    try {
+        
+        //Get the result of the algorithm's application on the map
+        cPath = cAlgorithm->apply(cMap.getStartTile(), cMap.getEndTile(), cMap.getTilesCount());
+        
+    } catch (std::exception& cException) {
+        
+        //Since one of the conditions for completing the traversal is incomplete, there is no solution
+        cPath = Path::createPath(nullptr);
+        
+    }
+
     //Print the path
     std::cout << *cPath << std::endl;
     

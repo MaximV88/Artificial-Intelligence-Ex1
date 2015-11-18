@@ -75,9 +75,35 @@ Map::~Map() {
 
 }
 
-Tile Map::getStartTile() const { return Tile(m_cData[0]); }
+Tile Map::getStartTile() const {
+    
+    //All of the tiles to iterate through
+    size_t uiTotal = m_uiHeight * m_uiWidth;
+    
+    //Find the required tile by enum type
+    for (size_t uiIndex = 0 ; uiIndex < uiTotal ; uiIndex++)
+        if (m_cData[uiIndex].eType == Tile::Types::kStart)
+            return Tile(m_cData[uiIndex]);
+    
+    //If no such tile found there is a fundumental problem with the map
+    throw std::runtime_error("no start tile found");
+    
+}
 
-Tile Map::getEndTile() const { return Tile(m_cData[index(m_uiWidth - 1, m_uiHeight - 1)]); }
+Tile Map::getEndTile() const {
+    
+    //All of the tiles to iterate through
+    size_t uiTotal = m_uiHeight * m_uiWidth;
+    
+    //Find the required tile by enum type
+    for (size_t uiIndex = 0 ; uiIndex < uiTotal ; uiIndex++)
+        if (m_cData[uiIndex].eType == Tile::Types::kEnd)
+            return Tile(m_cData[uiIndex]);
+    
+    //If no such tile found there is a fundumental problem with the map
+    throw std::runtime_error("no end tile found");
+
+}
 
 const Tile* Map::getTile(const Tile &cOrigin, Tile::Directions direction) const {
     

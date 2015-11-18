@@ -11,6 +11,7 @@
 
 #include "Algorithm.hpp"
 #include <queue>
+#include <stack>
 
 class UCSAlgorithm : public Algorithm {
     
@@ -31,14 +32,16 @@ class UCSAlgorithm : public Algorithm {
     
     struct NodeComparatorLessThan {
         bool operator() (const UCSAlgorithmNode* lhs, const UCSAlgorithmNode* rhs) {
-            return lhs->getPathCost() < rhs->getPathCost();
+            return lhs->getPathCost() > rhs->getPathCost();
         }
     };
 
     
     /** Returns a vector of direction that represent the result of the algorithm */
     virtual Path* apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const;
-        
+    
+    void clearNodes(std::stack<const UCSAlgorithmNode*>& scNodes) const;
+    
 public:
     
 };

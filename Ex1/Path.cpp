@@ -70,6 +70,12 @@ Path* Path::createPath(const std::vector<const Tile *> &vcPath) {
     
 }
 
+Path* Path::createPath(std::nullptr_t) {
+    
+    return new Path(std::vector<Tile::Directions>(), 0);
+    
+}
+
 Path::Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost) :
 m_uiCost(uiCost), m_vcDirections(vcDirections) { }
 
