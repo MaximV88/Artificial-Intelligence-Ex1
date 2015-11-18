@@ -32,7 +32,7 @@ class UCSAlgorithm : public Algorithm {
     
     struct NodeComparatorLessThan {
         bool operator() (const UCSAlgorithmNode* lhs, const UCSAlgorithmNode* rhs) {
-            return lhs->getPathCost() > rhs->getPathCost();
+            return lhs->getPathCost() >= rhs->getPathCost();
         }
     };
 
