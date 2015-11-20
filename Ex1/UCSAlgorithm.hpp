@@ -30,7 +30,12 @@ class UCSAlgorithm : public Algorithm {
         
     };
     
-    struct NodeComparatorLessThan {
+    /*
+     * The priority queue will do the opposite of the strick weak ordering,
+     * so we need to supply the NOT equavivalent: !(<) is actually >=.
+     */
+    
+    struct NodeComparatorGreaterEqualThan {
         bool operator() (const UCSAlgorithmNode* lhs, const UCSAlgorithmNode* rhs) {
             return lhs->getPathCost() >= rhs->getPathCost();
         }
@@ -38,7 +43,7 @@ class UCSAlgorithm : public Algorithm {
 
     
     /** Returns a vector of direction that represent the result of the algorithm */
-    virtual Path* apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const;
+    virtual Path* apply(const Tile& cStart, const Tile& cDestination) const;
     
     void clearNodes(std::stack<const UCSAlgorithmNode*>& scNodes) const;
     

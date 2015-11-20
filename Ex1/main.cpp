@@ -15,10 +15,11 @@
 
 using namespace std;
 
-int main(int argc, const char * argv[]) {
 
+int main(int argc, const char * argv[]) {
+    
     //Read the file to seperate the contents of map and algorithm
-    ifstream ifs("input2.txt");
+    ifstream ifs("input4I.txt");
     
     //Get the algorithm type
     string strAlgorithmType;
@@ -40,7 +41,7 @@ int main(int argc, const char * argv[]) {
     try {
         
         //Get the result of the algorithm's application on the map
-        cPath = cAlgorithm->apply(cMap.getStartTile(), cMap.getEndTile(), cMap.getTilesCount());
+        cPath = cAlgorithm->apply(cMap.getStartTile(), cMap.getEndTile());
         
     } catch (std::exception& cException) {
         
@@ -49,8 +50,10 @@ int main(int argc, const char * argv[]) {
         
     }
 
-    //Print the path
-    std::cout << *cPath << std::endl;
+    //Print the path to file
+    ofstream output("output.txt");
+    output << *cPath;
+    output.close();
     
     //Remove all dynamiclly allocated memory and return
     delete cPath;

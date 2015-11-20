@@ -10,23 +10,26 @@
 #include "Tile.hpp"
 #include "Path.hpp"
 
-Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const {
+Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
 
     size_t uiDepth = 0;
     std::stack<const Tile*> scValid;
     
-    bool bIsFound = false;
-    while (!bIsFound ) {
+    //Some initial value different from 0, could be anything
+    size_t uiPrevDepth = 1;
+
+    while (true) {
         
-        std::vector<const Tile*> vcOpenList;
         std::set<const Tile*, TileComparatorLessThan> scPath;
-        bIsFound = depthLimitedSearch(&cStart, &cDestination, uiDepth, scPath, scValid);
+        size_t uiReachedDepth = depthLimitedSearch(&cStart, &cDestination, uiDepth, scPath, scValid);
         ++uiDepth;
         
-        
-        //No need to proceed more than the maximum path length
-        if (uiDepth > uiTotalTiles)
+        //No need to proceed if the iteration cant go further despite having larger depth limit, or if result recieved
+        if ((uiPrevDepth == uiReachedDepth) || !scValid.empty())
             break;
+        
+        //Update for next iteration
+        uiPrevDepth = uiReachedDepth;
         
     }
 
@@ -34,13 +37,15 @@ Path* IDSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t u
     
 }
 
-bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, size_t depth, std::set<const Tile*, TileComparatorLessThan>& scPath, std::stack<const Tile *>& scValid) const {
+size_t IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, size_t depth, std::set<const Tile*, TileComparatorLessThan>& scPath, std::stack<const Tile *>& scValid) const {
     
     scPath.insert(cCurrent);
     
     //Since using unsigned int depth 0 is converted to simple check - add to visited if part of the path
-    if ((depth == 0) && (*cCurrent) == (*cGoal)) { scValid.push(cCurrent); return true; }
+    if ((depth == 0) && (*cCurrent) == (*cGoal)) { scValid.push(cCurrent); }
     else if (depth > 0) {
+        
+        size_t uiMaximalReachedDepth = 0;
         
         //Iterate over all it's neighbors (that have not been iterated on yet)
         for (const Tile* cTile : cCurrent->getNeighbors()) {
@@ -51,20 +56,31 @@ bool IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal, s
                 //Copy the current path to every unique following
                 std::set<const Tile*, TileComparatorLessThan> scCurrentPath = scPath;
                 
-                if(depthLimitedSearch(cTile, cGoal, depth - 1, scCurrentPath, scValid)) {
+                size_t uiReachedDepth = depthLimitedSearch(cTile, cGoal, depth - 1, scCurrentPath, scValid);
+                
+                //Push if result was found
+                if (!scValid.empty()) {
                     
-                    //Insert into the visited set
+                    //Insert into the visited set and return depth that includes another step upwards toward the root
                     scValid.push(cCurrent);
-                    return true;
-                    
+                    return uiReachedDepth + 1;
+    
                 }
+                
+                //The maximum reached depth is gathered from previous iterations
+                if (uiMaximalReachedDepth < uiReachedDepth)
+                    uiMaximalReachedDepth = uiReachedDepth;
                 
             }
             
         }
         
+        //Since we are keeping the value of the height, it needs to be incremented when going back
+        return uiMaximalReachedDepth + 1;
+        
     }
     
-    return false;
+    //Reached bottom of recursion - height is 0
+    return 0;
     
 }

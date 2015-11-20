@@ -35,7 +35,7 @@ public:
     static Algorithm* createAlgorithm(Algorithm::Type eType);
     
     /** Returns a vector of direction that represent the result of the algorithm */
-    virtual Path* apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const = 0;
+    virtual Path* apply(const Tile& cStart, const Tile& cDestination) const = 0;
 
 };
 

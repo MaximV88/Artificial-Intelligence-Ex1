@@ -206,66 +206,66 @@ const std::vector<const Tile*> Map::getNeighbors(const Tile &cTile) const {
     }
     
     if (!bIsAtRightBorder)      scTiles.push(&m_cData[index(cTile.m_uiPositionX + 1, cTile.m_uiPositionY)]);
-
-    //Can have up to 8 adjacent tiles
+    
+    //Stores the valid neighbors
     std::vector<const Tile*> vcNeighbors;
     
     //Iterate through all of the neighbors and store those who are valid (compensate for reducation in value before test)
-        while (!scTiles.empty()) {
-
-            const Tile& cNeighbor = *scTiles.top();
-            scTiles.pop();
-
-            //Check for water tiles
-            if (cNeighbor.eType != Tile::Types::kWater) {
-                
-                /* 
-                 * Check if the neighbor is sideways or not, otherwise we add (default).
-                 * For sideways neighbors the related neighbors must also be checked.
-                 * When the relevent tiles for the neighbors (adjacent in direction) have
-                 * been checked and found not to be Water, it's valid.
-                 */
-                
-                switch (cTile.getDirection(cNeighbor)) {
-                    case Tile::Directions::kLeftDown:
-                        
-                        //Must get the 'Down' and 'Left' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Tile::Directions::kLeft)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Tile::Directions::kDown)).eType == Tile::Types::kWater) continue;
-                        vcNeighbors.push_back(&cNeighbor);
-                        break;
-                        
-                    case Tile::Directions::kLeftUp:
-                        
-                        //Must get the 'Up' and 'Left' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Tile::Directions::kLeft)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Tile::Directions::kUp)).eType == Tile::Types::kWater) continue;
-                        vcNeighbors.push_back(&cNeighbor);
-                        break;
-                        
-                    case Tile::Directions::kRightDown:
-                        
-                        //Must get the 'Down' and 'Right' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Tile::Directions::kRight)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Tile::Directions::kDown)).eType == Tile::Types::kWater) continue;
-                        vcNeighbors.push_back(&cNeighbor);
-                        break;
-                        
-                    case Tile::Directions::kRightUp:
-
-                        //Must get the 'Up' and 'Right' neighbors of current tile - they must exist due to sideways existing
-                        if ((*getTile(cTile, Tile::Directions::kRight)).eType == Tile::Types::kWater) continue;
-                        if ((*getTile(cTile, Tile::Directions::kUp)).eType == Tile::Types::kWater) continue;
-                        vcNeighbors.push_back(&cNeighbor);
-                        break;
-                        
+    while (!scTiles.empty()) {
+        
+        const Tile& cNeighbor = *scTiles.top();
+        scTiles.pop();
+        
+        //Check for water tiles
+        if (cNeighbor.eType != Tile::Types::kWater) {
+            
+            /*
+             * Check if the neighbor is sideways or not, otherwise we add (default).
+             * For sideways neighbors the related neighbors must also be checked.
+             * When the relevent tiles for the neighbors (adjacent in direction) have
+             * been checked and found not to be Water, it's valid.
+             */
+            
+            switch (cTile.getDirection(cNeighbor)) {
+                case Tile::Directions::kLeftDown:
+                    
+                    //Must get the 'Down' and 'Left' neighbors of current tile - they must exist due to sideways existing
+                    if (getTile(cTile, Tile::Directions::kLeft)->eType == Tile::Types::kWater) continue;
+                    if (getTile(cTile, Tile::Directions::kDown)->eType == Tile::Types::kWater) continue;
+                    vcNeighbors.push_back(&cNeighbor);
+                    break;
+                    
+                case Tile::Directions::kLeftUp:
+                    
+                    //Must get the 'Up' and 'Left' neighbors of current tile - they must exist due to sideways existing
+                    if (getTile(cTile, Tile::Directions::kLeft)->eType == Tile::Types::kWater) continue;
+                    if (getTile(cTile, Tile::Directions::kUp)->eType == Tile::Types::kWater) continue;
+                    vcNeighbors.push_back(&cNeighbor);
+                    break;
+                    
+                case Tile::Directions::kRightDown:
+                    
+                    //Must get the 'Down' and 'Right' neighbors of current tile - they must exist due to sideways existing
+                    if (getTile(cTile, Tile::Directions::kRight)->eType == Tile::Types::kWater) continue;
+                    if (getTile(cTile, Tile::Directions::kDown)->eType == Tile::Types::kWater) continue;
+                    vcNeighbors.push_back(&cNeighbor);
+                    break;
+                    
+                case Tile::Directions::kRightUp:
+                    
+                    //Must get the 'Up' and 'Right' neighbors of current tile - they must exist due to sideways existing
+                    if (getTile(cTile, Tile::Directions::kRight)->eType == Tile::Types::kWater) continue;
+                    if (getTile(cTile, Tile::Directions::kUp)->eType == Tile::Types::kWater) continue;
+                    vcNeighbors.push_back(&cNeighbor);
+                    break;
+                    
                     //Since the direction is 'Up', 'Left', 'Right', 'Down' its valid
-                    default: vcNeighbors.push_back(&cNeighbor); break;
-                }
-                
+                default: vcNeighbors.push_back(&cNeighbor); break;
             }
             
         }
+        
+    }
     
     return vcNeighbors;
     

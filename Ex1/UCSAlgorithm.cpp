@@ -12,9 +12,9 @@
 #include "Tile.hpp"
 #include <set>
 
-Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination, size_t uiTotalTiles) const {
+Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
     
-    std::priority_queue<const UCSAlgorithmNode*, std::vector<const UCSAlgorithmNode*>, NodeComparatorLessThan> pcFrontier;
+    std::priority_queue<const UCSAlgorithmNode*, std::vector<const UCSAlgorithmNode*>, NodeComparatorGreaterEqualThan> pcFrontier;
     std::set<const Tile*, TileComparatorLessThan> scExplored;
 
     //Stores all of the allocated nodes

@@ -36,6 +36,7 @@
 		9424CF1C1BFBCF6900DA3742 /* input4I.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input4I.txt; sourceTree = "<group>"; };
 		9424CF1D1BFBCF6A00DA3742 /* input5I.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input5I.txt; sourceTree = "<group>"; };
 		9424CF1E1BFBCF6A00DA3742 /* input6I.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input6I.txt; sourceTree = "<group>"; };
+		9424CF1F1BFE3BFC00DA3742 /* 6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 6.txt; sourceTree = "<group>"; };
 		942915C71BFB59B700A89CFC /* input6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input6.txt; sourceTree = "<group>"; };
 		942915C81BFB5A5000A89CFC /* input7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input7.txt; sourceTree = "<group>"; };
 		9450124B1BF78D0A00913F6C /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
@@ -92,7 +93,6 @@
 				9450125D1BF7A39000913F6C /* Algorithm */,
 				9450124E1BF7910300913F6C /* Map */,
 				9423719D1BF27E5D00F46C34 /* main.cpp */,
-				941DD1481BFA520B00FF02BF /* input5.txt */,
 				945012521BF7A35500913F6C /* input.txt */,
 				94D023E31BF8BCEA00CEF4A8 /* input2.txt */,
 				94D023E41BF8BCEA00CEF4A8 /* input3.txt */,
@@ -102,6 +102,8 @@
 				9424CF1C1BFBCF6900DA3742 /* input4I.txt */,
 				9424CF1D1BFBCF6A00DA3742 /* input5I.txt */,
 				9424CF1E1BFBCF6A00DA3742 /* input6I.txt */,
+				941DD1481BFA520B00FF02BF /* input5.txt */,
+				9424CF1F1BFE3BFC00DA3742 /* 6.txt */,
 			);
 			path = Ex1;
 			sourceTree = "<group>";
