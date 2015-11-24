@@ -14,13 +14,13 @@
 
 Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
     
-    std::priority_queue<const UCSAlgorithmNode*, std::vector<const UCSAlgorithmNode*>, NodeComparatorGreaterEqualThan> pcFrontier;
+    std::priority_queue<const UCSAlgorithmNode*, std::vector<const UCSAlgorithmNode*>, NodeComparatorGreaterThan> pcFrontier;
     std::set<const Tile*, TileComparatorLessThan> scExplored;
 
     //Stores all of the allocated nodes
     std::stack<const UCSAlgorithmNode*> vcAllNodes;
     
-    const UCSAlgorithmNode* cStartNode = new UCSAlgorithmNode(nullptr, 0, &cStart);
+    const UCSAlgorithmNode* cStartNode = new UCSAlgorithmNode(NULL, 0, &cStart);
     
     vcAllNodes.push(cStartNode);
     pcFrontier.push(cStartNode);
@@ -30,6 +30,7 @@ Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
         const UCSAlgorithmNode* cNode = pcFrontier.top();
         pcFrontier.pop();
         
+        //If destination was found
         if ((*(cNode->getTile())) == cDestination) {
             
             std::stack<const Tile*> scTiles;
@@ -49,7 +50,14 @@ Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
         
         scExplored.insert(cNode->getTile());
         
-        for (const Tile* cChild : cNode->getTile()->getNeighbors())
+        std::vector<const Tile*> vcNeighbors = cNode->getTile()->getNeighbors();
+
+        //Iterate by reversal to get the sorting order correctly (because priority queue works by descending sorting)
+        for (std::vector<const Tile*>::reverse_iterator iterator = vcNeighbors.rbegin() ; iterator != vcNeighbors.rend() ; iterator++) {
+            
+            const Tile* cChild = *iterator;
+            
+            //If the tile has not been already considered try it
             if (scExplored.find(cChild) == scExplored.end()) {
 
                 const UCSAlgorithmNode* cChildNode = new UCSAlgorithmNode(cNode, cNode->getPathCost() + cChild->eType, cChild);
@@ -58,10 +66,13 @@ Path* UCSAlgorithm::apply(const Tile& cStart, const Tile& cDestination) const {
                 
             }
         
+        }
+        
     }
     
+    //Return empty
     clearNodes(vcAllNodes);
-    return Path::createPath(nullptr);
+    return Path::createPath(std::stack<const Tile*>());
     
 }
 

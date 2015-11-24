@@ -35,9 +35,9 @@ class UCSAlgorithm : public Algorithm {
      * so we need to supply the NOT equavivalent: !(<) is actually >=.
      */
     
-    struct NodeComparatorGreaterEqualThan {
+    struct NodeComparatorGreaterThan {
         bool operator() (const UCSAlgorithmNode* lhs, const UCSAlgorithmNode* rhs) {
-            return lhs->getPathCost() >= rhs->getPathCost();
+            return lhs->getPathCost() > rhs->getPathCost();
         }
     };
 

@@ -15,16 +15,16 @@
 #include <string>
 
 
-enum class Direction;
 class Path;
+
+enum AlgorithmType {
+    kIDS,
+    kUCS
+};
 
 class Algorithm {
 public:
     
-    enum class Type {
-        kIDS,
-        kUCS
-    };
     
     virtual ~Algorithm();
     
@@ -32,7 +32,7 @@ public:
     static Algorithm* createAlgorithm(const std::string& strFormattedType);
     
     /** Returns an algorithm by requested type */
-    static Algorithm* createAlgorithm(Algorithm::Type eType);
+    static Algorithm* createAlgorithm(AlgorithmType eType);
     
     /** Returns a vector of direction that represent the result of the algorithm */
     virtual Path* apply(const Tile& cStart, const Tile& cDestination) const = 0;

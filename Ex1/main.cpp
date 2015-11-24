@@ -19,7 +19,7 @@ using namespace std;
 int main(int argc, const char * argv[]) {
     
     //Read the file to seperate the contents of map and algorithm
-    ifstream ifs("input4I.txt");
+    ifstream ifs("input.txt");
     
     //Get the algorithm type
     string strAlgorithmType;
@@ -46,7 +46,7 @@ int main(int argc, const char * argv[]) {
     } catch (std::exception& cException) {
         
         //Since one of the conditions for completing the traversal is incomplete, there is no solution
-        cPath = Path::createPath(nullptr);
+        cPath = Path::createPath(std::stack<const Tile*>());
         
     }
 

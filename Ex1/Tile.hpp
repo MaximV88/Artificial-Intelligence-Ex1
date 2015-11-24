@@ -10,9 +10,29 @@
 #define Tile_hpp
 
 #include <stdio.h>
-#include <cstdint>
 #include <iostream>
 #include <vector>
+
+enum Types {
+    kRoad = 1,
+    kDirt = 3,
+    kHill = 10,
+    kWater,
+    kStart,
+    kEnd
+};
+
+enum Directions {
+    kRight,
+    kLeft,
+    kUp,
+    kDown,
+    kRightDown,
+    kRightUp,
+    kLeftDown,
+    kLeftUp,
+    kCenter
+};
 
 class Tile {
 
@@ -27,27 +47,6 @@ class Tile {
     void setNeighbors(const std::vector<const Tile*>& vcNeighbors);
     
 public:
-    
-    enum Types : std::int_fast8_t {
-        kRoad = 1,
-        kDirt = 3,
-        kHill = 10,
-        kWater,
-        kStart,
-        kEnd
-    };
-    
-    enum class Directions : int_fast8_t {
-        kRight,
-        kLeft,
-        kUp,
-        kDown,
-        kRightDown,
-        kRightUp,
-        kLeftDown,
-        kLeftUp,
-        kCenter
-    };
 
     //Public Variables
     const Types eType;

@@ -13,7 +13,7 @@ Path* Path::createPath(const std::stack<const Tile *>& scPath) {
     std::stack<const Tile*> svModifiablePath = scPath;
     
     size_t uiCost = 0;
-    std::vector<Tile::Directions> vcDirections;
+    std::vector<Directions> vcDirections;
     
     //Get the information from the order they were added by.
     while (!svModifiablePath.empty()) {
@@ -22,9 +22,9 @@ Path* Path::createPath(const std::stack<const Tile *>& scPath) {
         svModifiablePath.pop();
         
         switch (cCurrentTile->eType) {
-            case Tile::Types::kRoad: uiCost += 1; break;
-            case Tile::Types::kDirt: uiCost += 3; break;
-            case Tile::Types::kHill: uiCost += 10; break;
+            case kRoad: uiCost += 1; break;
+            case kDirt: uiCost += 3; break;
+            case kHill: uiCost += 10; break;
             default: break; //Shouldnt add cost for non-existing tiles
         }
         
@@ -46,15 +46,17 @@ Path* Path::createPath(const std::stack<const Tile *>& scPath) {
 Path* Path::createPath(const std::vector<const Tile *> &vcPath) {
     
     size_t uiCost = 0;
-    std::vector<Tile::Directions> vcDirections;
-    const Tile* cPrevTile = nullptr;
+    std::vector<Directions> vcDirections;
+    const Tile* cPrevTile = NULL;
     
-    for (const Tile* cCurrentTile : vcPath) {
+    for (std::vector<const Tile*>::const_iterator iterator = vcPath.begin() ; iterator != vcPath.end() ; iterator++) {
+        
+        const Tile* cCurrentTile = *iterator;
         
         switch (cCurrentTile->eType) {
-            case Tile::Types::kRoad: uiCost += 1; break;
-            case Tile::Types::kDirt: uiCost += 3; break;
-            case Tile::Types::kHill: uiCost += 10; break;
+            case kRoad: uiCost += 1; break;
+            case kDirt: uiCost += 3; break;
+            case kHill: uiCost += 10; break;
             default: break; //Shouldnt add cost for non-existing tiles
         }
         
@@ -70,18 +72,12 @@ Path* Path::createPath(const std::vector<const Tile *> &vcPath) {
     
 }
 
-Path* Path::createPath(std::nullptr_t) {
-    
-    return new Path(std::vector<Tile::Directions>(), 0);
-    
-}
-
-Path::Path(const std::vector<Tile::Directions>& vcDirections, size_t uiCost) :
+Path::Path(const std::vector<Directions>& vcDirections, size_t uiCost) :
 m_uiCost(uiCost), m_vcDirections(vcDirections) { }
 
 size_t Path::getCost() const { return m_uiCost; }
 
-const std::vector<Tile::Directions>& Path::getDirections() const { return m_vcDirections; }
+const std::vector<Directions>& Path::getDirections() const { return m_vcDirections; }
 
 std::ostream& operator<< (std::ostream &out, const Path &cPath) {
 
@@ -96,22 +92,24 @@ std::ostream& operator<< (std::ostream &out, const Path &cPath) {
     //Otherwise gather all of the directions to a string
     std::string strFormatted;
 
-    for (Tile::Directions direction : cPath.m_vcDirections) {
+    for (std::vector<Directions>::const_iterator iterator = cPath.m_vcDirections.begin() ; iterator != cPath.m_vcDirections.end() ; iterator++) {
     
+        Directions direction = *iterator;
+        
         //Append before each direction a '-' character, except for the first one
         if (strFormatted.length()) strFormatted.append("-");
         
         //Append by rules specified in instructions
         switch (direction) {
-            case Tile::Directions::kCenter:      strFormatted.append("C");   break; //Something is wrong
-            case Tile::Directions::kDown:        strFormatted.append("D");   break;
-            case Tile::Directions::kLeft:        strFormatted.append("L");   break;
-            case Tile::Directions::kRight:       strFormatted.append("R");   break;
-            case Tile::Directions::kUp:          strFormatted.append("U");   break;
-            case Tile::Directions::kLeftDown:    strFormatted.append("LD");  break;
-            case Tile::Directions::kLeftUp:      strFormatted.append("LU");  break;
-            case Tile::Directions::kRightDown:   strFormatted.append("RD");  break;
-            case Tile::Directions::kRightUp:     strFormatted.append("RU");  break;
+            case kCenter:      strFormatted.append("C");   break; //Something is wrong
+            case kDown:        strFormatted.append("D");   break;
+            case kLeft:        strFormatted.append("L");   break;
+            case kRight:       strFormatted.append("R");   break;
+            case kUp:          strFormatted.append("U");   break;
+            case kLeftDown:    strFormatted.append("LD");  break;
+            case kLeftUp:      strFormatted.append("LU");  break;
+            case kRightDown:   strFormatted.append("RD");  break;
+            case kRightUp:     strFormatted.append("RU");  break;
         }
         
     }

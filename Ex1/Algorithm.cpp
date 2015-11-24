@@ -13,20 +13,20 @@
 Algorithm* Algorithm::createAlgorithm(const std::string &strFormattedType) {
     
     if (strFormattedType.find("IDS") != std::string::npos)
-        return createAlgorithm(Algorithm::Type::kIDS);
+        return createAlgorithm(kIDS);
     else if (strFormattedType.find("UCS") != std::string::npos)
-        return createAlgorithm(Algorithm::Type::kUCS);
+        return createAlgorithm(kUCS);
     
-    return nullptr;
+    return NULL;
     
 }
 
-Algorithm* Algorithm::createAlgorithm(Algorithm::Type eType) {
+Algorithm* Algorithm::createAlgorithm(AlgorithmType eType) {
     
     switch (eType) {
-        case Algorithm::Type::kIDS: return new IDSAlgorithm();
-        case Algorithm::Type::kUCS: return new UCSAlgorithm();
-        default:                  return nullptr;
+        case kIDS: return new IDSAlgorithm();
+        case kUCS: return new UCSAlgorithm();
+        default:   return NULL;
     }
     
 }

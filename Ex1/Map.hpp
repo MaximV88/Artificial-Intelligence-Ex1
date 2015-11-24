@@ -20,10 +20,10 @@ class Map {
     size_t m_uiWidth;
     size_t m_uiHeight;
     
-    Tile* m_cData;
+    Tile** m_cData;
     
     //Private Functions
-    constexpr size_t index(size_t x, size_t y) const;
+    size_t index(size_t x, size_t y) const;
     
     /** Returns the neighbors of the input tile */
     const std::vector<const Tile*> getNeighbors(const Tile& cTile) const;
@@ -42,7 +42,7 @@ public:
     size_t getTilesCount() const;
     
     /** May return null if out of map bounds */
-    const Tile* getTile(const Tile& cOrigin, Tile::Directions direction) const;
+    const Tile* getTile(const Tile& cOrigin, Directions direction) const;
     
 };
 

@@ -48,7 +48,11 @@ size_t IDSAlgorithm::depthLimitedSearch(const Tile *cCurrent, const Tile *cGoal,
         size_t uiMaximalReachedDepth = 0;
         
         //Iterate over all it's neighbors (that have not been iterated on yet)
-        for (const Tile* cTile : cCurrent->getNeighbors()) {
+        std::vector<const Tile*> vcNeighbors = cCurrent->getNeighbors();
+        
+        for (std::vector<const Tile*>::const_iterator iterator = vcNeighbors.begin() ; iterator != vcNeighbors.end() ; iterator++) {
+            
+            const Tile* cTile = *iterator;
             
             //If the tile has not been visited yet on the current path (prevents cycles)
             if (scPath.find(cTile) == scPath.end()) {

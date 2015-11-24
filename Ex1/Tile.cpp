@@ -8,7 +8,7 @@
 
 #include "Tile.hpp"
 #include <string>
-#include <exception>
+#include <stdexcept>
 
 Tile::Tile(Types eTileType, size_t uiPositionX, size_t uiPositionY) :
 eType(eTileType), m_uiPositionX(uiPositionX), m_uiPositionY(uiPositionY) { }
@@ -30,51 +30,51 @@ std::vector<const Tile*> Tile::getNeighbors() const {
     
 }
 
-Tile::Directions Tile::getDirection(const Tile& cDestination) const {
+Directions Tile::getDirection(const Tile& cDestination) const {
     
     //Important to remember that highest is 0 and lowest is N-1, sideways is normal
     
     //Get the horizontal direction
     Directions eHorizontal;
-    if (cDestination.m_uiPositionX == m_uiPositionX)        eHorizontal = Directions::kCenter;
-    else if (cDestination.m_uiPositionX > m_uiPositionX)    eHorizontal = Directions::kRight;
-    else                                                    eHorizontal = Directions::kLeft;
+    if (cDestination.m_uiPositionX == m_uiPositionX)        eHorizontal = kCenter;
+    else if (cDestination.m_uiPositionX > m_uiPositionX)    eHorizontal = kRight;
+    else                                                    eHorizontal = kLeft;
     
     //Get the vertical direction
     Directions eVertical;
-    if (cDestination.m_uiPositionY == m_uiPositionY)        eVertical = Directions::kCenter;
-    else if (cDestination.m_uiPositionY > m_uiPositionY)    eVertical = Directions::kDown;
-    else                                                    eVertical = Directions::kUp;
+    if (cDestination.m_uiPositionY == m_uiPositionY)        eVertical = kCenter;
+    else if (cDestination.m_uiPositionY > m_uiPositionY)    eVertical = kDown;
+    else                                                    eVertical = kUp;
     
     //Compare both horizontal and vertical to get the final heading
     switch (eHorizontal) {
-        case Directions::kCenter:
+        case kCenter:
             
             switch (eVertical) {
-                case Directions::kCenter:    return Directions::kCenter;
-                case Directions::kUp:        return Directions::kUp;
-                case Directions::kDown:      return Directions::kDown;
+                case kCenter:    return kCenter;
+                case kUp:        return kUp;
+                case kDown:      return kDown;
                 default: break; //Shouldnt reach
             }
             
             break;
             
-        case Directions::kRight:
+        case kRight:
             
             switch (eVertical) {
-                case Directions::kCenter:    return Directions::kRight;
-                case Directions::kUp:        return Directions::kRightUp;
-                case Directions::kDown:      return Directions::kRightDown;
+                case kCenter:    return kRight;
+                case kUp:        return kRightUp;
+                case kDown:      return kRightDown;
                 default: break; //Shouldnt reach
                     
             }
             
-        case Directions::kLeft:
+        case kLeft:
             
             switch (eVertical) {
-                case Directions::kCenter:    return Directions::kLeft;
-                case Directions::kUp:        return Directions::kLeftUp;
-                case Directions::kDown:      return Directions::kLeftDown;
+                case kCenter:    return kLeft;
+                case kUp:        return kLeftUp;
+                case kDown:      return kLeftDown;
                 default:  break; //Shouldnt reach
             }
             
@@ -113,12 +113,12 @@ bool Tile::operator>(const Tile &cTile) const {
 std::string Tile::kind() const {
     
     switch (eType) {
-        case Tile::Types::kStart : return "Start";
-        case Tile::Types::kEnd   : return "End";
-        case Tile::Types::kHill  : return "Hill";
-        case Tile::Types::kRoad  : return "Road";
-        case Tile::Types::kDirt  : return "Dirt";
-        case Tile::Types::kWater : return "Water";
+        case kStart : return "Start";
+        case kEnd   : return "End";
+        case kHill  : return "Hill";
+        case kRoad  : return "Road";
+        case kDirt  : return "Dirt";
+        case kWater : return "Water";
     }
     
 }
@@ -126,12 +126,12 @@ std::string Tile::kind() const {
 char Tile::type() const {
  
     switch (eType) {
-        case Tile::Types::kStart:   return 'S';
-        case Tile::Types::kEnd:     return 'G';
-        case Tile::Types::kDirt:    return 'D';
-        case Tile::Types::kHill:    return 'H';
-        case Tile::Types::kWater:   return 'W';
-        case Tile::Types::kRoad:    return 'R';
+        case kStart:   return 'S';
+        case kEnd:     return 'G';
+        case kDirt:    return 'D';
+        case kHill:    return 'H';
+        case kWater:   return 'W';
+        case kRoad:    return 'R';
     }
     
 }
@@ -142,9 +142,13 @@ std::ostream& operator<< (std::ostream &out, const Tile &cTile) {
     
     if (cTile.m_vcNeighbors.size()) out << "List of neighbors: \n" << std::endl;
     
-    for (const Tile* cNeighbor : cTile.m_vcNeighbors)
+    for (std::vector<const Tile*>::const_iterator iterator = cTile.m_vcNeighbors.begin() ; iterator != cTile.m_vcNeighbors.end() ; iterator++) {
+        
+        const Tile* cNeighbor = *iterator;
         out << "Type: \t" << cNeighbor->type() << ", \tLocation: (" << cNeighbor->m_uiPositionX << ", " << cNeighbor->m_uiPositionY << ")" << "\n";
         
+    }
+    
     return out;
     
 }
